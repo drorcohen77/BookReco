@@ -1,0 +1,69 @@
+<div class="list_books scroll">
+    <div class="container">
+        <div class="col-md-4 col-xs-5 col-lg-4 search">
+            <div id="custom-search-input">
+                <div class="input-group">
+                    <input type="Search" class="search-query form-control" placeholder="Search for Book" name="Search" [(ngModel)]="book" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-warning" type="submit" (click)="searchBook()">
+                          <span><i class="fas fa-search"></i></span>
+                    </button>
+                    </span>
+                    <div *ngIf="variables.errorCode == 400" class="alert alert-danger searchAlert">
+                        {{HttpErrorResponse}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="variables.LoadSpiner" style="text-align: center;">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!-- <div *ngIf="!MovieService.validatResults" class="alert alert-danger">
+          COULD'T FIND THE MOVIE YOU WHERE LOOKING FOR. PLEASE TRY ANOTHER MOVIE NAME.
+      </div> -->
+        <div *ngIf="!variables.LoadSpiner" class="row">
+            <div class="col-lg-2 col-md-3 col-xs-12 allbooks" style="width: 92%;" *ngFor="let book of bookList; let i=index">
+                <div class="card-deck" (click)="bookDetails(book.id)">
+                    <div [ngClass]="{'card': !variables.isMobile ,'': variables.isMobile}">
+                        <div class="cardPic">
+                            <!-- <div class="favorites" *ngIf="movie.Favorite == false || movie.Favorite == undifined" (click)='addFavorite(movie)'>
+                              <i class="far fa-heart"></i>
+                          </div>
+                          <div class="favorites" *ngIf="movie.Favorite == true" (click)='removeFavorite(movie.imdbID)'>
+                              <i class="fas fa-heart"></i>
+                          </div> -->
+                            <img class="bookPoster" src="{{book.volumeInfo.imageLinks.smallThumbnail}}" class="card-img-top" alt="" style="width: 100%; height: 250px;">
+                        </div>
+
+                        <div class="card-body">
+                            <div class="book-title">
+                                <h5 class="card-title">{{book.volumeInfo.title}}</h5>
+                            </div>
+                            <!-- <div class="row edit_del_buttons">
+                        <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
+                        <button class='btn btn-primary' (click)='editMovie(movie,content)'>
+                                    <i class="fas fa-pencil-alt"></i>
+                                  </button>
+                        </div>
+                        <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
+                        <button class='btn btn-info' (click)='infoMovie(movie,infocontent)'>
+                                    <i class="fas fa-info-circle"></i>
+                                  </button>
+                        </div>
+                        <div [ngClass]="(Variables.isMobile) ? 'col mobile_buttons' : 'col-lg-4 buttons'">
+                        <button type="button" class="btn btn-danger" (click)='deletMovie(movie.imdbID,delcontent)'>
+                                    <i class="far fa-trash-alt"></i>
+                                  </button>
+                        </div>
+                    </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
