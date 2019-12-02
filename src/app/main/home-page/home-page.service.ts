@@ -39,7 +39,7 @@ export class HomePageService {
 
 
   public searchBook(book) {
-    
+
     return this.http
       .get<Books[]>(this.variables.url + `${book}` + this.variables.booksAPIkey)
       .pipe(
@@ -50,28 +50,12 @@ export class HomePageService {
               booksResult.push({...result.items[item]});
           }
           this.books = booksResult;
+          localStorage.setItem('BookList',JSON.stringify(this.books));
           this._bookList.next(this.books);
-          console.log(this._bookList)
+
           return booksResult;
         })
       );
-      
-      
-
-    // return this.http
-    //   .get<Books[]>(this.variables.url + `${book}` + this.variables.booksAPIkey)
-    //   .pipe(
-    //     map((result: any) => {
-    //       const booksResult = [];
-          
-    //       for (const item in result.items) {
-    //         this.books.push({...result.items[item]});
-    //       }
-    //       return this.books;
-    //     })
-    //   );
-    //   // debugger
-    //   this._bookList.next(this.books);
   }
 
 }

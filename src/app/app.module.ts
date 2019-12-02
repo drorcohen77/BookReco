@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { MainModule } from './main/main.module';
@@ -26,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     AuthModule,
     MainModule,
-    // NgbModule,
+    NgbModule,
     BrowserAnimationsModule
   ],
   providers: [],

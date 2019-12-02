@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <form #createReview="ngForm">
+                <h3 class="title">"{{bookDetails.title}}"</h3>
+
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input [(ngModel)]="newReview.name" type="text" class="form-control" name="name" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input [(ngModel)]="newReview.date" type="date" class="form-control" name="date" id="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="review">Your Review:</label>
+                    <textarea [(ngModel)]="newReview.review" name="review" rows="30" type="text" class="form-control" id="review" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="recommendation">Your Recommendation:</label>
+                    <input [(ngModel)]="newReview.recommend" type="text" class="form-control" name="recommendation" id="recommendation" required>
+                </div>
+
+                <button [disabled]="!createReview.form.valid" type="button" class="btn btn-success" (click)="addReveiw()">Submit</button>
+
+            </form>
+        </div>
+    </div>
+</div>

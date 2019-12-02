@@ -1,3 +1,29 @@
-<p>
-  create-review works!
-</p>
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <form #createReview="ngForm">
+
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" class="form-control" name="date" id="date">
+            </div>
+
+            <div class="form-group">
+                <label for="review">Your Review:</label>
+                <textarea name="review" rows="30" type="text" class="form-control" id="review" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="recommendation">Your Recommendation:</label>
+                <input type="text" class="form-control" name="recommendation" id="recommendation" required>
+            </div>
+
+            <button [disabled]="!createReview.form.valid" type="button" class="btn btn-success">Submit</button>
+
+        </form>
+    </div>
+</div>

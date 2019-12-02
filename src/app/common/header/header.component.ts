@@ -12,4 +12,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  public removLocalStorge(): void {
+    
+    if(localStorage.getItem('BookList')) {
+      localStorage.removeItem('BookList');
+    }
+  }
+
 }

@@ -1,3 +1,87 @@
-<p>
-  book-details works!
-</p>
+<router-outlet></router-outlet>
+
+<div class="">
+    <div class="upper-section">
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <img src="{{bookDetails.imageLinks}}" alt="" style="width: 90%; height: 400px;">
+            </div>
+            <div class="col-md-8 col-xs-12">
+                <h3 class="title">"{{bookDetails.title}}"</h3>
+                <p class="rental-description">
+                    <span>Author:  </span>"{{bookDetails.author? bookDetails.author : 'Unknown'}}"
+                </p>
+                <p class="rental-description">
+                    <span>Publisher: </span>"{{bookDetails.publisher? bookDetails.publisher : 'Unknown'}}"
+                </p>
+                <p class="rental-description">
+                    <span>Published Date: </span>{{bookDetails.publishedDate? bookDetails.publishedDate : 'Unknown'}}
+                </p>
+                <p class="rental-description">
+                    <span>Description: </span>"{{bookDetails.description? bookDetails.description : 'Not Available'}}"
+                </p>
+                <p class="rental-description">
+                    <span>Category: </span>"{{bookDetails.categories? bookDetails.categories : 'Unknown'}}"
+                </p>
+                <p class="rental-description">
+                    <span>Pages: </span>{{bookDetails.pageCount? bookDetails.pageCount : 'Unknown'}}
+                </p>
+                <p class="rental-description">
+                    <span>Language: </span>"{{bookDetails.language? bookDetails.language : 'Unknown'}}"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lower-section ">
+        <div class="row ">
+            <div class="col-md-12 col-xs-12">
+                <div class="buttons">
+                    <button class='btn btn-primary' (click)='addReview(bookDetails._id)'>
+                        <i class="fas fa-pencil-alt"></i> Add Review
+                      </button>
+                    <button class='btn btn-info' (click)='reviews()'>
+                          <i class="fas fa-info-circle"></i> Review
+                        </button>
+                    <!-- <h2 class="rental-type {{Apartment.category}} ">{{Apartment.shared ? 'Share' : 'Whole'}} {{Apartment.category}}</h2> -->
+                    <!-- <div class="rental-owner ">
+                        <img src="https://api.adorable.io/avatars/285/abott@adorable.png " alt=" ">
+                        <span>{{Apartment.user.username}}</span>
+                    </div> -->
+
+
+                    <!-- <h1 class="rental-title "></h1>
+                    <h2 class="rental-city "></h2> -->
+                    <!-- <div class="rental-room-info ">
+                        <span><i class="fa fa-building "></i>{{Apartment.bedrooms}} bedrooms</span>
+                        <span><i class="fa fa-user "></i> {{Apartment.bedrooms + 4}} guests</span>
+                        <span><i class="fa fa-bed "></i> {{Apartment.bedrooms + 2}} beds</span>
+                    </div> -->
+                    <!-- <p class="rental-description ">
+
+                    </p>
+                    <hr>
+                    <div class="rental-assets ">
+                        <h3 class="title ">Assets</h3>
+                        <div class="row ">
+                            <div class="col-md-6 ">
+                                <span><i class="fa fa-asterisk "></i> Cooling</span>
+                                <span><i class="fa fa-thermometer "></i> Heating</span>
+                                <span><i class="fa fa-location-arrow "></i> Iron</span>
+                            </div>
+                            <div class="col-md-6 ">
+                                <span><i class="fa fa-desktop "></i> Working area</span>
+                                <span><i class="fa fa-cube "></i> Washing machine</span>
+                                <span><i class="fa fa-cube "></i> Dishwasher</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+            </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

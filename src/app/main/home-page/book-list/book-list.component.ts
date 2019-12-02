@@ -1,7 +1,7 @@
+import { Books } from './../../../shared/books.model';
 import { Variables } from './../../../shared/variables';
 import { HomePageService } from './../home-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Books } from 'src/app/shared/books.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,29 +23,24 @@ export class BookListComponent implements OnInit, OnDestroy {
   private subscription: Subscription; 
   
 
-  constructor(private HomePage: HomePageService, public variables: Variables, private nav: Router) { }
+  constructor(private HomePage: HomePageService, public variables: Variables, private nav: Router) {
+    if(localStorage.getItem('pickedBook')) {
+      localStorage.removeItem('pickedBook');
+    }
+   }
 
   ngOnInit() {
 
-    // this.HomePage.getApiBooks().subscribe(
-    //   BookList => {
-    //   this.bookList = BookList;
-    //   console.log(this.bookList)
-    // },
-    // err => {});
+    if(localStorage.getItem('BookList')) {
+      this.bookList = JSON.parse(localStorage.getItem('BookList'));
+    }
   }
 
   public searchBook() {
     this.variables.LoadSpiner = true;
 
-    // this.subscription = this.HomePage.booksDetails.subscribe(result => {
-    //   this.bookList = result;
-    //   console.log(this.bookList)
-    // })
-
-
     this.subscription = this.HomePage.searchBook(this.book).subscribe(
-      (result) => {
+      (result: Books[]) => {
         this.bookList = result;
         console.log(this.bookList);
       },
@@ -66,7 +61,8 @@ export class BookListComponent implements OnInit, OnDestroy {
 
 
   public bookDetails(bookId: string): void {
-    this.nav.navigate(['home/details'],{queryParams: {'book-id':`${bookId}`}})
+
+    this.nav.navigate(['home/details'],{queryParams: {'book-id':`${bookId}`}});
   }
 
 
@@ -74,6 +70,10 @@ export class BookListComponent implements OnInit, OnDestroy {
     if(this.subscription){
       this.subscription.unsubscribe();
     }
+
+    // if(localStorage.getItem('BookList')) {
+    //   localStorage.removeItem('BookList');
+    // }
   }
 
 }
