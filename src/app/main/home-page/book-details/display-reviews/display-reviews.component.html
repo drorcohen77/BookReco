@@ -1,3 +1,23 @@
-<p>
-  display-reviews works!
-</p>
+<div class=" upper-section" *ngFor="let review of sharedVaribles.reviews">
+    <p class="book-description ">
+        <span>Name:  </span>"{{review.name}} "
+    </p>
+    <p class="book-description ">
+        <span>Review: </span>"{{review.review}} "
+    </p>
+    <p class="book-description ">
+        <span>Rating: </span>{{review.recommend}}
+    </p>
+</div>
+
+<div class="lower-section ">
+    <div class="row ">
+        <div class="col-md-12 col-xs-12 ">
+            <div class="buttons ">
+                <button class='btn btn-primary' (click)='close()'>
+            <i class="fas fa-pencil-alt "></i> Close
+          </button>
+            </div>
+        </div>
+    </div>
+</div>

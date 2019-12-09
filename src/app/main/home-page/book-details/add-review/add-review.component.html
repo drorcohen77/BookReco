@@ -1,32 +1,35 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-xs-12">
-            <form #createReview="ngForm">
-                <h3 class="title">"{{bookDetails.title}}"</h3>
-
-                <div class="form-group">
-                    <label for="name">Your Name:</label>
-                    <input [(ngModel)]="newReview.name" type="text" class="form-control" name="name" id="name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="date">Date:</label>
-                    <input [(ngModel)]="newReview.date" type="date" class="form-control" name="date" id="date">
-                </div>
-
-                <div class="form-group">
-                    <label for="review">Your Review:</label>
-                    <textarea [(ngModel)]="newReview.review" name="review" rows="30" type="text" class="form-control" id="review" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="recommendation">Your Recommendation:</label>
-                    <input [(ngModel)]="newReview.recommend" type="text" class="form-control" name="recommendation" id="recommendation" required>
-                </div>
-
-                <button [disabled]="!createReview.form.valid" type="button" class="btn btn-success" (click)="addReveiw()">Submit</button>
-
-            </form>
-        </div>
-    </div>
+<div>
+    <h5 class="title">Add your review to: </h5>
+    <span>"{{Book.title}}"</span>
 </div>
+
+<form #addReview="ngForm">
+
+    <div class="form-group">
+        <label for="userName">Your Name:</label>
+        <input [(ngModel)]="newReview.name" type="text" class="form-control" name="userName" id="userName" placeholder="Enter your name" required #userName="ngModel">
+        <span class="alert" *ngIf="userName.invalid && userName.touched">Your Name is Requiered!</span>
+    </div>
+
+    <div class="form-group">
+        <label for="date">Date:</label>
+        <input [(ngModel)]="newReview.createDate" type="text" class="form-control" name="date" id="date" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="review">Your Review:</label>
+        <textarea [(ngModel)]="newReview.review" name="review" rows="20" type="text" class="form-control" id="review" placeholder="Type your reniew here..." required #review="ngModel"></textarea>
+        <span class="alert" *ngIf="review.invalid && review.touched">Please Write your Review</span>
+    </div>
+
+    <div class="form-group">
+        <label for="rating">Your Rating:</label>
+        <p>( 1 = Not recommeneded : 5 = Very recommended)</p>
+        <input [(ngModel)]="newReview.recommend" type="number" class="form-control" name="rating" id="rating" min="1" max="5" placeholder="Your Rating..." required #rating="ngModel">
+        <span class="alert" *ngIf="rating.invalid && rating.touched">Please Rate This Book for Recommenedtion to Others</span>
+        <span class="alert" *ngIf="newReview.recommend < 1 || newReview.recommend > 5">Please Enter Rate From 1 - 5!</span>
+    </div>
+
+    <button [disabled]="addReview.invalid || newReview.recommend < 1 || newReview.recommend > 5" type="button" class="btn btn-success" (click)="addReveiw()">Submit</button>
+
+</form>

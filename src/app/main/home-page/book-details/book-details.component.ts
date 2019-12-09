@@ -1,8 +1,9 @@
 import { HomePageService } from './../home-page.service';
 import { Books } from './../../../shared/books.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription, of } from 'rxjs';
+import { SharedVariables } from './shared-variables/shared_variables';
 
 
 
@@ -16,8 +17,9 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   private bookId: string = ''
   private bookDetails: Books;
   private subscripion: Subscription;
+  
 
-  constructor(private rout: ActivatedRoute, private homePageService: HomePageService, private nav: Router) {
+  constructor(private rout: ActivatedRoute, private homePageService: HomePageService, private sharedVaribles: SharedVariables) {
     
     this.bookId = this.rout.snapshot.queryParams['book-id'];
 
@@ -36,7 +38,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
           for (book of books) {
             if(this.bookId === book.id) {
-              this.bookDetails._id = book.id;
+              this.bookDetails._bookID = book.id;
               this.bookDetails.title = book.volumeInfo.title;
               this.bookDetails.author = book.volumeInfo.authors;
               this.bookDetails.publisher = book.volumeInfo.publisher;
@@ -57,14 +59,18 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
 
-  public addReview(bookID: string) {
+  public addReview() {
     
     // this.nav.navigate(['home/new-review'],{queryParams: {'bookID': `${bookID}`}});
-    this.nav.navigate(['/add-review']);
+    // this.nav.navigate(['/add-review']);
+    this.sharedVaribles.addRevieButton = true;
+    this.sharedVaribles.reviewButton = false;
   }
 
 
-  public review() {
+  public reviews() {
+    this.sharedVaribles.reviewButton = true;
+    this.sharedVaribles.addRevieButton = false;
 
   }
 

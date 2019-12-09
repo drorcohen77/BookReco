@@ -1,10 +1,12 @@
+import { Books } from 'src/app/shared/books.model';
+
+
 export class Recommendation {
-    
-    static readonly Dateformat = 'DD/MM/YYYY';
-    _id: string;
+   
+    _reviewID: string;
     name: string;
     createDate: string;
     review: string
     recommend: number;
-
+    book: Books;
 }

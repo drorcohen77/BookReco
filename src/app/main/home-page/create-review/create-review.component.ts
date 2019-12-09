@@ -1,4 +1,3 @@
-import { Recommendation } from './../../../shared/recommendation';
 import { HomePageService } from './../home-page.service';
 import { Component, OnInit } from '@angular/core';
 import { Books } from 'src/app/shared/books.model';
