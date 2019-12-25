@@ -20,7 +20,7 @@ import { HomePageService } from './home-page/home-page.service';
 import { BookDetailsService } from './home-page/book-details/book-details.service';
 
 import { Variables } from '../shared/variables';
-import { SharedVariables } from './home-page/book-details/shared-variables/shared_variables';
+import { SharedVariables } from './home-page/book-details/shared-BookDetails/Shared_variables';
 
 
 

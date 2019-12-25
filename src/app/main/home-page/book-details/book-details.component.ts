@@ -1,9 +1,11 @@
+import { Variables } from './../../../shared/variables';
 import { HomePageService } from './../home-page.service';
 import { Books } from './../../../shared/books.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, of } from 'rxjs';
-import { SharedVariables } from './shared-variables/shared_variables';
+import { BookDetailsService } from './book-details.service';
+import { SharedVariables } from './shared-BookDetails/Shared_variables';
 
 
 
@@ -17,9 +19,15 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   private bookId: string = ''
   private bookDetails: Books;
   private subscripion: Subscription;
+  public bookReviews: any = [];
+  
   
 
-  constructor(private rout: ActivatedRoute, private homePageService: HomePageService, private sharedVaribles: SharedVariables) {
+  constructor(private rout: ActivatedRoute, 
+              private homePageService: HomePageService, 
+              private sharedVaribles: SharedVariables,
+              private bookDetailsService: BookDetailsService,
+              private variables: Variables) {
     
     this.bookId = this.rout.snapshot.queryParams['book-id'];
 
@@ -59,16 +67,34 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
 
-  public addReview() {
+  public onAddReview() {
     
     // this.nav.navigate(['home/new-review'],{queryParams: {'bookID': `${bookID}`}});
     // this.nav.navigate(['/add-review']);
+    console.log(this.bookDetails)
+    this.bookDetailsService.checkBook(this.bookDetails._bookID).subscribe(
+      (bookExists: string) => {  
+        this.sharedVaribles.existBookID = Object.keys(bookExists).toString();
+
+        if(this.sharedVaribles.existBookID.length === 0) {
+
+          this.bookDetailsService.creatBook(this.bookDetails).subscribe(
+            (itemID: string) => {
+              this.sharedVaribles.existBookID = Object.values(itemID).toString();
+            });
+        }
+      }
+    );
+
     this.sharedVaribles.addRevieButton = true;
     this.sharedVaribles.reviewButton = false;
   }
 
 
-  public reviews() {
+   public async onGetReviews() {
+    
+    this.bookReviews = await this.bookDetailsService.getBookReviews(this.bookDetails._bookID);
+    console.log(this.bookReviews)
     this.sharedVaribles.reviewButton = true;
     this.sharedVaribles.addRevieButton = false;
 

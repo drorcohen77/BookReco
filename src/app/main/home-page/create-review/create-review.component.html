@@ -1,29 +1,92 @@
 <div class="row">
-    <div class="col-md-6 col-xs-12">
-        <form #createReview="ngForm">
+    <div class="col-md-12 col-xs-12">
+        <h3>PLEASE </h3>
+        <form #addReview="ngForm">
 
             <div class="form-group">
-                <label for="name">Your Name:</label>
-                <input type="text" class="form-control" name="name" id="name" required>
+                <label for="BookTitle">Book Title:</label>
+                <input [(ngModel)]="createReview.title" type="text" class="form-control" name="title" id="title" placeholder="What is the name of the book?" required #BookTitle="ngModel">
+                <span class="alert" *ngIf="BookTitle.invalid && BookTitle.touched">Book Title is Requiered!</span>
             </div>
 
             <div class="form-group">
+                <label for="userName">Your Name:</label>
+                <input [(ngModel)]="createReview.name" type="text" class="form-control" name="userName" id="userName" placeholder="Enter your name" required #userName="ngModel">
+                <span class="alert" *ngIf="userName.invalid && userName.touched">Your Name is Requiered!</span>
+            </div>
+
+            <!-- <div class="form-group">
                 <label for="date">Date:</label>
-                <input type="date" class="form-control" name="date" id="date">
-            </div>
+                <input [(ngModel)]="createReview.createDate" type="text" class="form-control" name="date" id="date" disabled>
+            </div> -->
 
             <div class="form-group">
                 <label for="review">Your Review:</label>
-                <textarea name="review" rows="30" type="text" class="form-control" id="review" required></textarea>
+                <textarea [(ngModel)]="createReview.review" name="review" rows="20" type="text" class="form-control" id="review" placeholder="Type your review here..." required #review="ngModel"></textarea>
+                <span class="alert" *ngIf="review.invalid && review.touched">Please Write your Review</span>
             </div>
 
             <div class="form-group">
-                <label for="recommendation">Your Recommendation:</label>
-                <input type="text" class="form-control" name="recommendation" id="recommendation" required>
+                <label for="rating">Your Rating:</label>
+                <p>( 1 = Not recommeneded : 5 = Very recommended)</p>
+                <input [(ngModel)]="createReview.recommend" type="number" class="form-control" name="rating" id="rating" min="1" max="5" placeholder="Your Rating..." required #rating="ngModel">
+                <span class="alert" *ngIf="rating.invalid && rating.touched">Please Rate This Book for Recommenedtion to Others</span>
+                <span class="alert" *ngIf="rating.touched && (createReview.recommend < 1 || createReview.recommend > 5)">Please Enter Rate From 1 - 5!</span>
             </div>
 
-            <button [disabled]="!createReview.form.valid" type="button" class="btn btn-success">Submit</button>
+            <button [disabled]="addReview.invalid || addReview.recommend < 1 || addReview.recommend > 5" type="button" class="btn btn-success" (click)="onCreateReveiw(addReview)">Submit</button>
 
         </form>
+
+        <!-- <h3>PLEASE </h3>
+
+            <div class="form-group">
+                <label for="title">Book Title:</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="What is the name of the book?" required>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" class="form-control" name="author" id="author" placeholder="Who wrote the book?" required>
+            </div>
+
+            <div class="form-group">
+                <label for="publisher">Publisher:</label>
+                <input name="publisher" type="text" class="form-control" id="publisher" placeholder="Enter the book publisher" required>
+            </div>
+
+            <div class="form-group">
+                <label for="publishedDate">Published Date:</label>
+                <input type="date" class="form-control" name="publishedDate" id="publishedDate" placeholder="Enter published Date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Book Description:</label>
+                <textarea name="description" rows="20" type="text" class="form-control" id="description" placeholder="Write a short description, what this book is about..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="categories">Category:</label>
+                <input type="text" class="form-control" name="categories" id="categories" placeholder="Pick acategory for this book..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="imageLinks">Book Image:</label>
+                <input type="text" class="form-control" name="imageLinks" id="imageLinks" placeholder="Enter image link for this book">
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <input type="text" class="form-control" name="language" id="language" placeholder="In which language this book is written?">
+            </div>
+
+            <div class="form-group">
+                <label for="pageCount">Number of Pages:</label>
+                <input type="number" class="form-control" name="pageCount" id="pageCount" min="1" placeholder="How many Pages this book has?" required>
+            </div>
+
+            <button [disabled]="!createReview.form.valid" type="button" class="btn btn-success">Submit</button> -->
+
+        <!-- </form> -->
     </div>
 </div>

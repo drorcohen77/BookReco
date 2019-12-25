@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 import { PipeComponent } from './common/pipe/pipe.component';
 import { AuthModule } from './auth/auth.module';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from 'src/environments/environment';
+
 
 
 
@@ -27,7 +31,9 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     MainModule,
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+ 	  AngularFireDatabaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

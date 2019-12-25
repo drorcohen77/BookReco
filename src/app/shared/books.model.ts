@@ -12,5 +12,6 @@ export class Books {
     public categories: string;
     public imageLinks: string;
     public language: string;
-    public recommendation: Recommendation[] =  [];
+    // public recommendation: Recommendation[] =  [];
+    public recommendation: Recommendation;
 } 

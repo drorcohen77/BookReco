@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SharedVariables } from '../shared-variables/shared_variables';
+import { Component, OnInit, Input } from '@angular/core';
+import { BookDetailsService } from '../book-details.service';
+import { Recommendation } from 'src/app/shared/recommendation.model';
+import { SharedVariables } from '../shared-BookDetails/Shared_variables';
 
 
 @Component({
@@ -9,11 +11,15 @@ import { SharedVariables } from '../shared-variables/shared_variables';
 })
 export class DisplayReviewsComponent implements OnInit {
 
-  constructor(private sharedVaribles: SharedVariables) { }
+  @Input() BookReviews: Recommendation[];
+
+  constructor(private sharedVaribles: SharedVariables, private bookDetailsService: BookDetailsService) { }
 
   ngOnInit() {
-    console.log(this.sharedVaribles.reviews)
+    
+    console.log(this.BookReviews)
   }
+  
 
 
   close() {

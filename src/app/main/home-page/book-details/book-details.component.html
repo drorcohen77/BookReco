@@ -1,6 +1,7 @@
 <div class="">
     <div class="row">
-        <div class="col-xs-12" [ngClass]="(!sharedVaribles.addRevieButton && !sharedVaribles.reviewButton) ? 'col-md-12' : 'col-md-7'">
+        <div *ngIf="!variables.createReview" class="col-xs-12" [ngClass]="(!sharedVaribles.addRevieButton && !sharedVaribles.reviewButton) ? 'col-md-12' : 'col-md-7'">
+
             <div class=" upper-section ">
                 <div class="row ">
                     <div class="col-md-5 col-xs-12 ">
@@ -37,11 +38,11 @@
                 <div class="row ">
                     <div class="col-md-12 col-xs-12 ">
                         <div class="buttons ">
-                            <button class='btn btn-primary' (click)='addReview()'>
+                            <button class='btn btn-primary' (click)='onAddReview()'>
                         <i class="fas fa-pencil-alt "></i> Add Review
                       </button>
-                            <button class='btn btn-info' (click)='reviews()'>
-                          <i class="fas fa-info-circle "></i> Review
+                            <button class='btn btn-info' (click)='onGetReviews()'>
+                          <i class="fas fa-info-circle "></i> Reviews
                         </button>
                         </div>
                     </div>
@@ -49,12 +50,12 @@
             </div>
         </div>
 
-        <div *ngIf="sharedVaribles.addRevieButton" class="col-md-5">
+        <div *ngIf="sharedVaribles.addRevieButton || variables.createReview" class="col-md-5" [ngClass]="(variables.createReview) ? 'col-md-12' : 'col-md-5'">
             <app-add-review [Book]="bookDetails"></app-add-review>
         </div>
 
         <div *ngIf="sharedVaribles.reviewButton" class="col-md-5">
-            <app-display-reviews></app-display-reviews>
+            <app-display-reviews [BookReviews]="bookReviews"></app-display-reviews>
         </div>
     </div>
 </div>
