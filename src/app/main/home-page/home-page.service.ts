@@ -1,12 +1,14 @@
+import { Recommendation } from './../../shared/recommendation.model';
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { map, tap } from "rxjs/operators";
+import { map, first } from "rxjs/operators";
 
 import { Books } from './../../shared/books.model';
 import { Variables } from './../../shared/variables';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 
@@ -19,24 +21,22 @@ export class HomePageService {
   readonly booksDetails = this._bookList.asObservable();
   private books: Books[] = []; 
 
-  constructor(private variables: Variables, private http: HttpClient, private db: AngularFireDatabase ) { }
+  constructor(private variables: Variables, private http: HttpClient, private db: AngularFireDatabase, private DB: AngularFirestore ) { }
 
-  public getApiBooks(){
-    return this.http
-      .get<Books[]>(this.variables.url + this.variables.booksAPIkey)
-      .pipe(
-        map((books: any) =>{
-          const booksArray = [];
+  // public getApiBooks(){
+  //   return this.http
+  //     .get<Books[]>(this.variables.url + this.variables.booksAPIkey)
+  //     .pipe(
+  //       map((books: any) =>{
+  //         const booksArray = [];
           
-          for (const book in books.items) {
-            // if(books.items.hasOwnProperty()) {
-              booksArray.push({...books.items[book]});
-            // }
-          }
-          return booksArray;
-        })
-      );
-  }
+  //         for (const book in books.items) {
+  //             booksArray.push({...books.items[book]});
+  //         }
+  //         return booksArray;
+  //       })
+  //     );
+  // }
 
 
   public searchBook(book) {
@@ -60,25 +60,38 @@ export class HomePageService {
   }
 
 
-  public existBook(newReco: any) {
-    console.log(newReco.title,newReco)
-    return this.db.list('/Books', ref => ref.orderByChild('title').equalTo(`${newReco.title}`)).valueChanges()
-                  .pipe(map((res: any) => {
-                      if(res.length === 0) {
-                        return false;
-                      } else {
-                        return true;
-                      }
-                    })
-                  );
-
-    // this.db.list('/Books', { query: { orderByChild: 'title', equalTo: 'On War' } });
-    // console.log(x )
+  public existBook(title: string) {
+   
+    return this.db.list('/Books', ref => ref.orderByChild('title').equalTo(`${title}`)).snapshotChanges()
+                  .pipe(
+                    map((res: any) => {
+                      let bookID: string;
+                      
+                      res.map(book => {
+                        bookID = book.key;
+                      });
+                      return bookID;
+                    }),
+                    first())
+                  .toPromise();
   }
 
 
-  public addRecommendation() {
-    console.log('add')
+  public addRecommendation(bookID: string,newReview: Recommendation) {
+
+    this.db.list(`Books/${bookID}/recommendation`)
+            .push(newReview)
+            .then(()=> console.log('success'))
+            .catch(err => console.log(err, 'fail'));
+  }
+
+  
+  public createBook(newBook) {
+
+    this.db.list(`Books/`)
+            .push(newBook)
+            .then(()=> console.log('success'))
+            .catch(err => console.log(err, 'fail'));
   }
 
 }

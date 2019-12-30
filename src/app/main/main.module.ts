@@ -21,6 +21,7 @@ import { BookDetailsService } from './home-page/book-details/book-details.servic
 
 import { Variables } from '../shared/variables';
 import { SharedVariables } from './home-page/book-details/shared-BookDetails/Shared_variables';
+import { CreateBookComponent } from './home-page/create-book/create-book.component';
 
 
 
@@ -46,7 +47,8 @@ const routes: Routes = [
     BookDetailsComponent,
     CreateReviewComponent,
     AddReviewComponent,
-    DisplayReviewsComponent
+    DisplayReviewsComponent,
+    CreateBookComponent
   ],
   imports: [
     CommonModule,

@@ -41,7 +41,7 @@ export class AddReviewComponent implements OnInit,OnDestroy {
 
   // this.dataStore.push(...data.Search.map( ({Type,...rest}) => ({...rest,Favorite: false}) ) );
   public addReveiw() {
-
+    debugger
     // firebase.app('BooksReco').database().ref('review').child("LvbO3J2zlP-O5RPLFf").equalTo(this.Book._bookID).once("value", snapshot => {
     //   if (snapshot.exists()){
     //      console.log("exists!");
@@ -53,6 +53,7 @@ export class AddReviewComponent implements OnInit,OnDestroy {
   //  });
   // this.variables.logedIn= true
     if(this.variables.logedIn) {
+      debugger
       this.sharedVaribles.bookReviews = new Books();
       this.newReview = {...this.newReview, _reviewID: this.Book._bookID + this._ID}
       this.sharedVaribles.bookReviews = {...this.Book,...this.sharedVaribles.bookReviews};

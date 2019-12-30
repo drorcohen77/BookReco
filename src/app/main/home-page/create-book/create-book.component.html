@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <h3>PLEASE </h3>
+        <form #createBook="ngForm">
+            <div class="form-group">
+                <label for="title">Book Title:</label>
+                <input [(ngModel)]="newBook.title" type="text" class="form-control" name="title" id="title" placeholder="What is the name of the book?" required #title="ngModel">
+                <span class="alert" *ngIf="title.invalid && title.touched">Book Title is Requiered!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input [(ngModel)]="newBook.author" type="text" class="form-control" name="author" id="author" placeholder="Who wrote the book?" required #author="ngModel">
+                <span class="alert" *ngIf="author.invalid && author.touched">Book Author is Requiered!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="publisher">Publisher:</label>
+                <input [(ngModel)]="newBook.publisher" name="publisher" type="text" class="form-control" id="publisher" placeholder="Enter the book publisher" required #publisher="ngModel">
+                <span class="alert" *ngIf="publisher.invalid && publisher.touched">Book Publisher is Requiered!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="publishedDate">Published Date:</label>
+                <input [(ngModel)]="newBook.publishedDate" type="date" class="form-control" name="publishedDate" id="publishedDate" placeholder="Enter published Date">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Book Description:</label>
+                <textarea [(ngModel)]="newBook.description" name="description" rows="15" type="text" class="form-control" id="description" placeholder="Write a short description, what this book is about..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="categories">Category:</label>
+                <input [(ngModel)]="newBook.categories" type="text" class="form-control" name="categories" id="categories" placeholder="Pick category for this book...">
+            </div>
+
+            <div class="form-group">
+                <label for="imageLinks">Book Image:</label>
+                <input [(ngModel)]="newBook.imageLinks" type="text" class="form-control" name="imageLinks" id="imageLinks" placeholder="Enter image link for this book" required #imageLinks="ngModel">
+                <span class="alert" *ngIf="imageLinks.invalid && imageLinks.touched">Bbook Image is Requiered!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <input [(ngModel)]="newBook.language" type="text" class="form-control" name="language" id="language" placeholder="In which language this book is written?" required #language="ngModel">
+                <span class="alert" *ngIf="language.invalid && language.touched">Please Specify Book's Language!</span>
+            </div>
+
+            <div class="form-group">
+                <label for="pageCount">Number of Pages:</label>
+                <input [(ngModel)]="newBook.pageCount" type="number" class="form-control" name="pageCount" id="pageCount" min="1" placeholder="How many Pages this book has?">
+            </div>
+
+            <button [disabled]="!createBook.form.valid" type="button" class="btn btn-success" (click)="onCreateBook()">Submit</button>
+
+        </form>
+    </div>
+</div>

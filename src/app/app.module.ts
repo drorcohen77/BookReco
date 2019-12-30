@@ -12,6 +12,7 @@ import { PipeComponent } from './common/pipe/pipe.component';
 import { AuthModule } from './auth/auth.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 
 
@@ -33,7 +34,8 @@ import { environment } from 'src/environments/environment';
     NgbModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
- 	  AngularFireDatabaseModule,
+    AngularFireDatabaseModule,
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

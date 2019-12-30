@@ -72,12 +72,13 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     // this.nav.navigate(['home/new-review'],{queryParams: {'bookID': `${bookID}`}});
     // this.nav.navigate(['/add-review']);
     console.log(this.bookDetails)
+    
     this.bookDetailsService.checkBook(this.bookDetails._bookID).subscribe(
       (bookExists: string) => {  
         this.sharedVaribles.existBookID = Object.keys(bookExists).toString();
 
         if(this.sharedVaribles.existBookID.length === 0) {
-
+          
           this.bookDetailsService.creatBook(this.bookDetails).subscribe(
             (itemID: string) => {
               this.sharedVaribles.existBookID = Object.values(itemID).toString();
