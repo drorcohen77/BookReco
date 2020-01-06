@@ -62,7 +62,9 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   public bookDetails(bookId: string): void {
 
-    this.nav.navigate(['home/details'],{queryParams: {'book-id':`${bookId}`}});
+    this.nav.navigate(['home/details'],{
+      queryParams: {'book-id':`${bookId}`}
+    });
   }
 
 

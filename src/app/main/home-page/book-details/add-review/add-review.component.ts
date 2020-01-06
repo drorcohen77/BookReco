@@ -19,7 +19,7 @@ export class AddReviewComponent implements OnInit,OnDestroy {
   @Input() Book: Books;
   public newReview:Recommendation;
   private nowDate: string;
-  private readonly _ID: string = '+RATE';
+  // private readonly _ID: string = '+RATE';
   
 
   constructor(private sharedVaribles: SharedVariables,
@@ -55,7 +55,8 @@ export class AddReviewComponent implements OnInit,OnDestroy {
     if(this.variables.logedIn) {
       debugger
       this.sharedVaribles.bookReviews = new Books();
-      this.newReview = {...this.newReview, _reviewID: this.Book._bookID + this._ID}
+      // this.newReview = {...this.newReview, _reviewID: this.Book._bookID + this._ID}
+      this.newReview = {...this.newReview, _reviewID: this.Book._bookID}
       this.sharedVaribles.bookReviews = {...this.Book,...this.sharedVaribles.bookReviews};
       console.log(this.Book)
       console.log(this.newReview)

@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
+    "ngb-modal": "^2.0.3",
     "npm": "^6.13.1",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",

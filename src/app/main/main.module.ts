@@ -55,7 +55,7 @@ const routes: Routes = [
     FormsModule,
     HomePageRoutingModule,
     HttpClientModule,
-    NgbModule,
+    NgbModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
   providers: [HomePageService,BookDetailsService,Variables,SharedVariables]

@@ -11,9 +11,18 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="home/booklist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" routerLink="home/new-review" routerLinkActive="active">Create Review</a>
-            </li>
+            </li> -->
+            <div class="nav-item dropdown clickable">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" routerLinkActive="active">
+                    Create New
+                        </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" routerLink="home/new-book">Create Book</a>
+                    <a class="dropdown-item" routerLink="home/new-review">Create Review</a>
+                </div>
+            </div>
             <li class="nav-item">
                 <a class="nav-link" href="#" routerLinkActive="active">Disabled</a>
             </li>

@@ -31,7 +31,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     AuthModule,
     MainModule,
-    NgbModule,
+    NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,

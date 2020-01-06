@@ -31,14 +31,14 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     
     this.bookId = this.rout.snapshot.queryParams['book-id'];
 
-    if(localStorage.getItem('pickedBook')) {
-      this.bookDetails = JSON.parse(localStorage.getItem('pickedBook'));
-    }
+    // if(localStorage.getItem('pickedBook')) {
+    //   this.bookDetails = JSON.parse(localStorage.getItem('pickedBook'));
+    // }
    }
 
   ngOnInit() {
     
-      if(!this.bookDetails) {
+      if(!localStorage.getItem('pickedBook')) {
       this.subscripion = this.homePageService.booksDetails.subscribe(
         (books: Books[]) =>{ 
           this.bookDetails = new Books();

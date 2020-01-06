@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Recommendation } from 'src/app/shared/recommendation.model';
 import { HomePageService } from './../home-page.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,12 +17,15 @@ export class CreateReviewComponent implements OnInit {
  
   // public pickedBook: Books;
   public createReview: any;
+  public bookID: any;
   private nowDate: string;
   private checkBook: any;
   private newReview: any; 
   // private bookExists: boolean;
 
-  constructor(private HomePageService: HomePageService, private nav: Router) {
+  constructor(private HomePageService: HomePageService, private nav: Router, private route: ActivatedRoute) {
+
+    this.bookID = this.route.snapshot.queryParams['book_id'];
     this.createReview = new Recommendation();
     this.nowDate = moment().format('DD/MM/YYYY');
   }
@@ -31,33 +34,41 @@ export class CreateReviewComponent implements OnInit {
 
 
   async onCreateReveiw(addReview: NgForm) {
-    this.createReview.title = this.createReview.title.replace(/[^\w\s]/gi, "").trim().replace(/\b\w/g, (s) => s.toUpperCase());
-    this.newReview = {...this.createReview, createDate: this.nowDate, title: this.createReview.title};
+    
+    if (localStorage.getItem('new_book')) {
+      let newBook = JSON.parse(localStorage.getItem('new_book'));
+      this.createReview.title = newBook.title;
+    }
+    console.log(this.createReview)
+    this.createReview.title = this.createReview.title.replace(/[^\w\s]/gi, "")
+                                                        .trim()
+                                                        .replace(/\b\w/g, (s) => s.toUpperCase());
+    this.newReview = {...this.createReview, createDate: this.nowDate};
     console.log(this.newReview)
     // const startAtSearch: string = this.createReview.title.slice(0,3);
     // const endAtSearch: string = this.createReview.title.slice(this.createReview.title.length-3);
-    addReview.reset();
-
-    // this.HomePageService.existBook(this.newReview.title).subscribe(
-    //   (bookExists: string) => {
-    //     this.checkBook = bookExists;
-    //     console.log(this.checkBook)
-    //     debugger
-    //   }
-    // );
-
-    this.checkBook = await this.HomePageService.existBook(this.newReview.title);
-    debugger
-        console.log(this.checkBook,'good')
-
-    if(this.checkBook != undefined) {
-      delete this.newReview.title;
-      this.HomePageService.addRecommendation(this.checkBook,this.newReview);
-      this.nav.navigate(['/home/booklist']);
-    }else{
-      this.nav.navigate(['home/new-book']);
+    // addReview.reset();
+    if (!localStorage.getItem('new_book')) {
+        this.checkBook = await this.HomePageService.existBook(this.createReview.title);
     }
-  }
 
+    if (this.bookID && this.bookID !== 'false') {
+        this.HomePageService.addRecommendation(this.bookID,this.newReview);
+        this.nav.navigate(['/home/booklist']);
+    } else if (this.checkBook != undefined || this.bookID === 'false') {
+        delete this.newReview.title;
+        this.HomePageService.addRecommendation(this.checkBook,this.newReview);
+        this.nav.navigate(['/home/booklist']);
+    } else {
+        localStorage.setItem('new_review', JSON.stringify(this.newReview));
+        // if (localStorage.getItem('new_book')) {
+
+        // } else {
+          this.nav.navigate(['home/new-book']);
+        // }
+    }
+    
+    localStorage.removeItem('new_book');
+  }
 
 }

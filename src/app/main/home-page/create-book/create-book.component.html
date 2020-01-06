@@ -2,7 +2,7 @@
     <div class="col-md-12 col-xs-12">
         <h3>PLEASE </h3>
         <form #createBook="ngForm">
-            <div class="form-group">
+            <div *ngIf="!reviewInStorage" class="form-group">
                 <label for="title">Book Title:</label>
                 <input [(ngModel)]="newBook.title" type="text" class="form-control" name="title" id="title" placeholder="What is the name of the book?" required #title="ngModel">
                 <span class="alert" *ngIf="title.invalid && title.touched">Book Title is Requiered!</span>
@@ -52,8 +52,25 @@
                 <input [(ngModel)]="newBook.pageCount" type="number" class="form-control" name="pageCount" id="pageCount" min="1" placeholder="How many Pages this book has?">
             </div>
 
-            <button [disabled]="!createBook.form.valid" type="button" class="btn btn-success" (click)="onCreateBook()">Submit</button>
+            <button [disabled]="!createBook.form.valid" type="button" class="btn btn-success" (click)="onCreateBook(moveToReview)">Submit</button>
 
         </form>
     </div>
 </div>
+
+<ng-template #moveToReview let-c="close" let-d="dismiss">
+    <div class="modal-header del_modal-header">
+        <h4 *ngIf="!HomePageService.Exist_Book" class="modal-title" id="modal-basic-title">The Book Has Been Saved Successfully!</h4>
+        <h4 *ngIf="HomePageService.Exist_Book" class="modal-title" id="modal-basic-title">This Book is Already Exists!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <h5>Do you want to add a review ?</h5>
+    </div>
+    <div class="modal-footer">
+        <a type="button" class="btn btn-success" [routerLink]="['/home/new-review']" [queryParams]="{book_id: bookExist}" (click)="c('Close click')">Yes</a>
+        <a type="button" class="btn btn-outline-dark" routerLink="/home/booklist" (click)="c('Close click')">No</a>
+    </div>
+</ng-template>

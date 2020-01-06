@@ -20,6 +20,7 @@ export class HomePageService {
   private readonly _bookList = new BehaviorSubject<Books[]>([]);
   readonly booksDetails = this._bookList.asObservable();
   private books: Books[] = []; 
+  public Exist_Book: boolean;
 
   constructor(private variables: Variables, private http: HttpClient, private db: AngularFireDatabase, private DB: AngularFirestore ) { }
 
@@ -61,7 +62,8 @@ export class HomePageService {
 
 
   public existBook(title: string) {
-   
+
+    this.Exist_Book = false;
     return this.db.list('/Books', ref => ref.orderByChild('title').equalTo(`${title}`)).snapshotChanges()
                   .pipe(
                     map((res: any) => {
@@ -70,6 +72,9 @@ export class HomePageService {
                       res.map(book => {
                         bookID = book.key;
                       });
+                      if (bookID != undefined) {
+                          this.Exist_Book = true;
+                      }
                       return bookID;
                     }),
                     first())
@@ -77,21 +82,43 @@ export class HomePageService {
   }
 
 
-  public addRecommendation(bookID: string,newReview: Recommendation) {
+  public addRecommendation(bookID: string,newReview: any) {
 
-    this.db.list(`Books/${bookID}/recommendation`)
-            .push(newReview)
-            .then(()=> console.log('success'))
-            .catch(err => console.log(err, 'fail'));
+    if (newReview.title) {
+      delete newReview.title;
+    }
+    
+    return this.db.list(`Books/${bookID}/recommendation`)
+            .push(newReview).key;
   }
 
   
-  public createBook(newBook) {
+  public async createBook(newBook) {
 
-    this.db.list(`Books/`)
-            .push(newBook)
-            .then(()=> console.log('success'))
-            .catch(err => console.log(err, 'fail'));
+    this.Exist_Book = false;
+    let newTitle = newBook.title.replace(/[^\w\s]/gi, "").trim().replace(/\b\w/g, (s) => s.toUpperCase());
+    newBook = {...newBook, title: newTitle};
+
+    if (localStorage.getItem('new_review')) {
+      let new_Review: any;
+      new_Review = JSON.parse(localStorage.getItem('new_review'));
+      delete new_Review.title ;
+       
+      let bookKey = this.db.list(`Books/`).push(newBook).key;
+
+      this.addRecommendation(bookKey,new_Review);
+
+    } else {
+      let returnBook: string;
+      returnBook = await this.existBook(newBook.title);
+
+      if (returnBook === undefined) {
+        return this.db.list(`Books/`).push(newBook).key;
+
+      } else {
+          return returnBook;
+      }
+    }
   }
 
 }

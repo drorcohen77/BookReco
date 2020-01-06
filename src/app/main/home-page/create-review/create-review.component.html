@@ -3,7 +3,7 @@
         <h3>PLEASE </h3>
         <form #addReview="ngForm">
 
-            <div class="form-group">
+            <div *ngIf="!bookID" class="form-group">
                 <label for="BookTitle">Book Title:</label>
                 <input [(ngModel)]="createReview.title" type="text" class="form-control" name="title" id="title" placeholder="What is the name of the book?" required #BookTitle="ngModel">
                 <span class="alert" *ngIf="BookTitle.invalid && BookTitle.touched">Book Title is Requiered!</span>
