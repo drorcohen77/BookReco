@@ -3,6 +3,7 @@ import { Books } from 'src/app/shared/books.model';
 import { Router } from '@angular/router';
 import { HomePageService } from '../home-page.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CreateBookComponent implements OnInit {
   public reviewInStorage: any;
 
 
-  constructor(private HomePageService: HomePageService, private nav: Router, private modalService: NgbModal) { 
+  constructor(private HomePageService: HomePageService, private nav: Router, private modalService: NgbModal, private toastr: ToastrService) { 
     
     this.reviewInStorage = JSON.parse(localStorage.getItem('new_review'));
     this.newBook = new Books;
@@ -38,6 +39,7 @@ export class CreateBookComponent implements OnInit {
       (book: any) =>{
         this.bookExist = book;
         if (localStorage.getItem('new_review')) {
+          this.toastr.success('Your Book Has Been Successfuly Added!')
           this.nav.navigate(['/home/booklist']);
         } else {
           localStorage.setItem('new_book', JSON.stringify(this.newBook));
