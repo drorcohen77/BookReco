@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { BookDetailsService } from '../book-details.service';
 import { Recommendation } from 'src/app/shared/recommendation.model';
 import { SharedVariables } from '../shared-BookDetails/Shared_variables';
@@ -16,8 +16,6 @@ export class DisplayReviewsComponent implements OnInit {
   constructor(private sharedVaribles: SharedVariables, private bookDetailsService: BookDetailsService) { }
 
   ngOnInit() {
-    
-    console.log(this.BookReviews)
   }
   
 
@@ -26,5 +24,7 @@ export class DisplayReviewsComponent implements OnInit {
     this.sharedVaribles.reviewButton = false;
   }
   
-
+  ngOnDestroy():  void {
+    this.sharedVaribles.reviewButton = false;
+  }
 }

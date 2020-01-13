@@ -1,13 +1,20 @@
-<div class=" upper-section" *ngFor="let review of BookReviews">
-    <p class="book-description ">
-        <span>Name:  </span>"{{review.name}} "
-    </p>
-    <p class="book-description ">
-        <span>Review: </span>"{{review.review}} "
-    </p>
-    <p class="book-description ">
-        <span>Rating: </span>{{review.recommend}}
-    </p>
+<div *ngIf="BookReviews == undefined || !BookReviews" class="alert alert-danger searchAlert">
+    <p>There is no reviews for this book!</p>
+    <p>You are welcome to add the first one.</p>
+</div>
+
+<div *ngIf="BookReviews">
+    <div class=" upper-section" *ngFor="let review of BookReviews">
+        <p class="book-description ">
+            <span>Name:  </span>"{{review.name}} "
+        </p>
+        <p class="book-description ">
+            <span>Review: </span>"{{review.review}} "
+        </p>
+        <p class="book-description ">
+            <span>Rating: </span>{{review.recommend}}
+        </p>
+    </div>
 </div>
 
 <div class="lower-section ">

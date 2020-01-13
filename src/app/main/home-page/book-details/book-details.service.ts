@@ -60,45 +60,17 @@ export class BookDetailsService {
                     .pipe(
                       map((bookReco: any) => {
                         reco = Object.values(bookReco);
-                        return Object.values(reco[0].recommendation);
+
+                        if (reco.length === 0) {
+                            return false;
+                        } else if (reco[0].recommendation === undefined) {
+                            return reco[0].recommendation;
+                        } else {
+                            return Object.values(reco[0].recommendation);
+                        }
                       })
                     )
                     .toPromise();
   }
-    
-    // /49809560.json?orderBy="properties/ZCTA5CE10"&equalTo="02818"&print=pretty
-    
-    // this.http.post(this.variables.FirebaseDB + `Books/${x}/recommendation.json`,Books).subscribe(response => {
-    //   console.log(response);
-    // });
-
-    // this.http.put(this.variables.FirebaseDB + `Books/${x}/recommendation.json`,Books).subscribe(response => {
-    //   console.log(response);
-    // });
-
-    // this.http.get(this.variables.FirebaseDB + `Books/`+ x+ '/recommendation.json').subscribe(response => {
-    //   console.log(response);
-    // });
-
-    
-//     this.db.list(`/Books/${x}`).valueChanges()
-//     .pipe(map(snapshots => {
-//       return snapshots.map(snap => {
-//         return snap;
-//       });
-//     })).subscribe(res => {
-//       console.log(res);
-//     });
-
-    // return this.db.list(`/Books/${x}`,ref => ref.orderByKey()).snapshotChanges()
-    // .pipe(tap(snapshot=> { 
-    //   return snapshot.map(snap => {
-    //     return snap.payload.val();
-    //   });
-    // })).subscribe(res=> {
-    //   console.log(res)
-    // });
-    
-  
 
 }

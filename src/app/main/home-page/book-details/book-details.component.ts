@@ -31,9 +31,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     
     this.bookId = this.rout.snapshot.queryParams['book-id'];
 
-    // if(localStorage.getItem('pickedBook')) {
-    //   this.bookDetails = JSON.parse(localStorage.getItem('pickedBook'));
-    // }
    }
 
   ngOnInit() {
@@ -69,10 +66,6 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   public onAddReview() {
     
-    // this.nav.navigate(['home/new-review'],{queryParams: {'bookID': `${bookID}`}});
-    // this.nav.navigate(['/add-review']);
-    console.log(this.bookDetails)
-    
     this.bookDetailsService.checkBook(this.bookDetails._bookID).subscribe(
       (bookExists: string) => {  
         this.sharedVaribles.existBookID = Object.keys(bookExists).toString();
@@ -95,7 +88,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
    public async onGetReviews() {
     
     this.bookReviews = await this.bookDetailsService.getBookReviews(this.bookDetails._bookID);
-    console.log(this.bookReviews)
+    
     this.sharedVaribles.reviewButton = true;
     this.sharedVaribles.addRevieButton = false;
 
