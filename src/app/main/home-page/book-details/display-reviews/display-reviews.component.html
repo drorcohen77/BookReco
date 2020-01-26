@@ -5,14 +5,27 @@
 
 <div *ngIf="BookReviews">
     <div class=" upper-section" *ngFor="let review of BookReviews">
-        <p class="book-description ">
-            <span>Name:  </span>"{{review.name}} "
+        <p class="book-description">
+            <span>Name: </span>{{review.name}}
         </p>
-        <p class="book-description ">
-            <span>Review: </span>"{{review.review}} "
+        <p class="book-description">
+            <span>Review: </span>{{review.review}}
         </p>
-        <p class="book-description ">
+        <p class="book-description">
             <span>Rating: </span>{{review.recommend}}
+        </p>
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+            </span>
+          </ng-template>
+          
+          <ngb-rating [(rate)]="review.recommend" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+          
+          <hr>
+          <pre>Rate: <b>{{review.recommend}}</b></pre>
+        <p class="book-description">
+            <span>Date: </span>{{review.createDate}}
         </p>
     </div>
 </div>

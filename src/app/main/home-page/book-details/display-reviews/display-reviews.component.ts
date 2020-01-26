@@ -13,6 +13,7 @@ export class DisplayReviewsComponent implements OnInit {
 
   @Input() BookReviews: Recommendation[];
 
+
   constructor(private sharedVaribles: SharedVariables, private bookDetailsService: BookDetailsService) { }
 
   ngOnInit() {

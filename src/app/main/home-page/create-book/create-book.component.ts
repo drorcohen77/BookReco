@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HomePageService } from '../home-page.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class CreateBookComponent implements OnInit {
 
 
   public onCreateBook(moveToReview)  {
-    
+     
+    let newPublishDate = moment(this.newBook.publishedDate).format('DD/MM/YYYY');
+    this.newBook = {...this.newBook, publishedDate: newPublishDate};
+
     if (this.reviewInStorage) {
       this.newBook = {...this.newBook, title: this.reviewInStorage.title};
     }

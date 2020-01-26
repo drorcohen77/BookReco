@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes,RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePageRoutingModule } from './home-page/home-page-routing.module';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { MainComponent } from './main.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -56,6 +57,7 @@ const routes: Routes = [
     HomePageRoutingModule,
     HttpClientModule,
     NgbModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
   providers: [HomePageService,BookDetailsService,Variables,SharedVariables]
