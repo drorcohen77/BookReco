@@ -1,11 +1,80 @@
-<div *ngIf="BookReviews == undefined || !BookReviews" class="alert alert-danger searchAlert">
+<!-- <div *ngIf="BookReviews == undefined || !BookReviews" class="alert alert-danger searchAlert">
     <p>There is no reviews for this book!</p>
     <p>You are welcome to add the first one.</p>
+</div> -->
+<div *ngIf=" BookReviews != null && BookReviews.length == 0" class="alert alert-danger searchAlert">
+  <p>There is no reviews for this book!</p>
+  <p>You are welcome to add the first one.</p>
 </div>
-
-<div *ngIf="BookReviews">
+<div *ngIf="variables.LoadSpiner" style="text-align: center;">
+  <app-loading-spinner></app-loading-spinner>
+  <!-- <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+  </div> -->
+</div>
+<!-- <mat-accordion> -->
+    <!-- <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel> -->
+    <!-- <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Self aware panel
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </mat-accordion> -->
+<!-- <div *ngIf="BookReviews"> -->
+  <div *ngIf="!variables.LoadSpiner">
     <div class=" upper-section" *ngFor="let review of BookReviews">
-        <p class="book-description">
+
+      <mat-accordion class="headers-align">
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <p class="book-description">
+                <span>Name: </span>{{review.name}}
+            </p>
+            </mat-panel-title>
+            <mat-panel-description>
+              <p class="book-description">
+                <span>Date: </span>{{review.createDate}}
+            </p>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <hr>
+          <p class="book-description">
+            <span>Review: </span>{{review.review}}
+        </p>
+        <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&hearts;</span>&hearts;
+            </span>
+          </ng-template>
+          
+          <ngb-rating [(rate)]="review.recommend" [starTemplate]="t" [readonly]="true" max="5"></ngb-rating>
+          
+          <hr>
+          <pre>Rate: <b>{{review.recommend}}</b></pre>
+        </mat-expansion-panel>
+      </mat-accordion>
+        <!-- <p class="book-description">
             <span>Name: </span>{{review.name}}
         </p>
         <p class="book-description">
@@ -26,9 +95,11 @@
           <pre>Rate: <b>{{review.recommend}}</b></pre>
         <p class="book-description">
             <span>Date: </span>{{review.createDate}}
-        </p>
-    </div>
+        </p> -->
+  </div>
 </div>
+<!-- </div> -->
+
 
 <div class="lower-section ">
     <div class="row ">

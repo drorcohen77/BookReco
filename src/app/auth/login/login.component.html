@@ -1,3 +1,57 @@
-<p>
-  login works!
-</p>
+  <div class="backdrop"></div>
+  <div >
+    <div class="modal-dialog modal-dialog-centered login-box" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+        <div *ngIf="variables.LoadSpiner" style="text-align: center;">
+          <app-load-spinner></app-load-spinner>
+          <p>Please wait a second...</p>
+        </div>
+          <h5 *ngIf="!this.variables.fromCreateNewBook" class="modal-title" id="exampleModalCenterTitle">Welcome To BookReco. Please Log In First</h5>
+          <h5 *ngIf="this.variables.fromCreateNewBook" class="modal-title" id="exampleModalCenterTitle">Log In First To Create New Book or Review</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div *ngIf="!variables.LoadSpiner">
+
+        <div class="alert alert-danger" *ngIf="error">
+          <p>{{error}}</p>
+        </div>
+
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="email" class="col-form-label">Your Email Address:</label>
+                <input [(ngModel)]="email" type="text" class="form-control" id="Email" name="Email" placeholder="Please enter your email" required #Email="ngModel">
+                <span class="alert" *ngIf="Email.invalid && Email.touched"> Email is Requiered!</span>
+              </div>
+              <div class="form-group">
+                <label for="password" class="col-form-label">Your Password:</label>
+                <input 
+                  [(ngModel)]="password" 
+                  type="text" 
+                  class="form-control" 
+                  id="Password" 
+                  name="Password" 
+                  placeholder="Please enter your password" 
+                  required 
+                  #Password="ngModel"
+                >
+                <span class="alert" *ngIf="Password.invalid && Password.touched"> Password is Requiered!</span>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary form-control" (click)="logIn()">Log-In</button>
+          </div>
+      </div>
+
+        <div class="">
+          <span>New To BookReco? </span>
+          <button type="button" class="btn btn-link" routerLink="/register" (click)="onClose()"> Please Registre Here</button>
+        </div>
+      </div>
+    </div>
+  </div>

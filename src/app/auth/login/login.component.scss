@@ -1,0 +1,35 @@
+// .dark-modal .modal-content {
+//     background-color: #292b2c;
+//     color: white;
+//   }
+//   .dark-modal .close {
+//     color: white;
+//   }
+//   .light-blue-backdrop {
+//     background-color: #5cb3fd;
+//   }
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 50;
+}
+
+.login-box {
+    position: fixed;
+    top: -5vh;
+    left: 36vw;
+    // width: 60vw;
+    padding: 16px;
+    // background:white;
+    z-index: 100;
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);;
+}
+
+// .login-box-actions {
+//     text-align: right;
+// }

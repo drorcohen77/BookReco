@@ -1,3 +1,5 @@
+<ng-template appPlaceholder></ng-template>
+
 <div class="row">
     <div class="col-md-12 col-xs-12">
         <h3>PLEASE </h3>
@@ -23,7 +25,15 @@
             <div class="form-group">
                 <label for="publishedDate">Published Date:</label>
                 <!-- <input [(ngModel)]="newBook.publishedDate" type="date" class="form-control" name="publishedDate" id="publishedDate" placeholder="Enter published Date"> -->
-                <input [(ngModel)]="newBook.publishedDate" class="form-control" name="publishedDate" id="publishedDate" bsDatepicker [outsideClick]="true" [bsConfig]="{ isAnimated: true }" placeholder="Enter published Date">
+                <input 
+                    [(ngModel)]="newBook.publishedDate" 
+                    class="form-control" 
+                    name="publishedDate" 
+                    id="publishedDate" 
+                    bsDatepicker  
+                    [bsConfig]="{ isAnimated: true }"
+                    placeholder="Enter published Date"
+                >
             </div>
 
             <div class="form-group">
@@ -59,8 +69,12 @@
     </div>
 </div>
 
+
+<!-- <app-create-review-modal [MoveToReview]="reviewModal" *ngIf="variables.fromCreateNewBook"></app-create-review-modal> -->
+
+
 <ng-template #moveToReview let-c="close" let-d="dismiss">
-    <div class="modal-header del_modal-header">
+    <div class="modal-header">
         <h4 *ngIf="!HomePageService.Exist_Book" class="modal-title" id="modal-basic-title">The Book Has Been Added Successfully!</h4>
         <h4 *ngIf="HomePageService.Exist_Book" class="modal-title" id="modal-basic-title">This Book is Already Exists!</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -71,7 +85,7 @@
         <h5>Do you want to add a review ?</h5>
     </div>
     <div class="modal-footer">
-        <a type="button" class="btn btn-success" [routerLink]="['/home/new-review']" [queryParams]="{book_id: bookExist}" (click)="c('Close click')">Yes</a>
+        <a type="button" class="btn btn-success" [routerLink]="['/home/details/add-review']" [queryParams]="{book_title: newBook.title}" (click)="c('Close click')">Yes</a>
         <a type="button" class="btn btn-outline-dark" routerLink="/home/booklist" (click)="c('Close click')">No</a>
     </div>
 </ng-template>

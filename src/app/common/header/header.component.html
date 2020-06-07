@@ -1,3 +1,4 @@
+<ng-template appPlaceholder></ng-template> <!--for programmaticlly component-->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #bebaee;">
     <a class="navbar-brand" routerLink="home/booklist" (click)="removLocalStorge()">
         <img src="" class="card-img-top" alt="" style="width: 45px; height: 35px;margin-right: 3px;"><i>BookReco</i>
@@ -7,25 +8,56 @@
   </button> -->
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
+        <ul class="navbar-nav mt-2 mt-lg-0">
             <li class="nav-item">
                 <a class="nav-link" routerLink="home/booklist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
             </li>
             <!-- <li class="nav-item">
                 <a class="nav-link" routerLink="home/new-review" routerLinkActive="active">Create Review</a>
             </li> -->
-            <div class="nav-item dropdown clickable">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" routerLinkActive="active">
+            <div class="nav-item">
+                <a  class="nav-link" 
+                    routerLink="home/new-book" 
+                    routerLinkActive="active">
                     Create New
-                        </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                </a>
+                <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" routerLink="home/new-book">Create Book</a>
                     <a class="dropdown-item" routerLink="home/new-review">Create Review</a>
-                </div>
+                </div> -->
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="#" routerLinkActive="active">Disabled</a>
             </li>
+            <li class="nav-item" class="col-md-4 col-xs-5 col-lg-4 search">
+                <div id="custom-search-input">
+                    <div class="input-group">
+                        <input type="Search" class="search-query form-control" placeholder="Search for Book" name="Search" [(ngModel)]="book" />
+                        <span class="input-group-btn">
+                          <button class="btn btn-warning" type="submit" (click)="searchBook()">
+                              <span><i class="fas fa-search"></i></span>
+                        </button>
+                        </span>
+                        <!-- <div *ngIf="variables.errorCode == 400" class="alert alert-danger searchAlert">
+                            {{HttpErrorResponse}}
+                        </div> -->
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <button *ngIf="!variables.logedIn" class="btn btn-outline-primary" routerLinkActive="active" (click)="logIn()">Log-In</button>
+            </li>
+            <li *ngIf="variables.logedIn" class="nav-item">
+                <button class="btn btn-link" routerLinkActive="active" (click)="logOut()">Log-Out</button>
+            </li>
+
+            <li class="nav-item">
+                <a>
+                    <button *ngIf="!variables.logedIn" class="btn btn-outline-dark" (click)="signUp()">Sign-Up</button>
+                </a>
+            </li>
         </ul>
+        
     </div>
 </nav>

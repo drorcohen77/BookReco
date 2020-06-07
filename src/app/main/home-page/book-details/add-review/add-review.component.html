@@ -1,6 +1,9 @@
+<ng-template appPlaceholder></ng-template>
+
 <div>
     <h5 class="title">Add your review to: </h5>
-    <span>"{{Book.title}}"</span>
+    <span *ngIf="!variables.fromCreateNewBook">"{{Book.title}}"</span>
+    <span *ngIf="variables.fromCreateNewBook">"{{bookTitle}}"</span>
 </div>
 
 <form #addReview="ngForm">
