@@ -150,7 +150,7 @@ export class BookListComponent implements OnInit {
     //   new BookReveiwsActions.getBookReviews(bookId)
     // );
 
-    this.nav.navigate(['/home/details'],{
+    this.nav.navigate(['/main/home/details'],{
       queryParams: {'book-id':`${bookId}`}
     });
   }

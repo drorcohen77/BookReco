@@ -103,7 +103,7 @@ debugger
       // this.bookDetailsService.addReview(this.sharedVaribles.bookReviews.recommendation);
       this.toastr.success('Your Review Has Been Successfuly Added!');
       this.sharedVaribles.addRevieButton = false;
-      this.nav.navigate(['/booklist']);
+      this.nav.navigate(['/main/home/booklist']);
     } else {
         // this.nav.navigate(['/login']);
         if (!this.variables.fromCreateNewBook){

@@ -47,7 +47,7 @@ export class BookListEffects {
     // searchRes = this.actions$.pipe(
     //     ofType(BookListActions.RESULT_SEARCH_BOOK),
     //     tap(() =>{
-    //         this.nav.navigate(['/home/booklist']);
+    //         this.nav.navigate(['/main/home/booklist']);
     //     })
     // );
 

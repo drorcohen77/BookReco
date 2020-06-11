@@ -46,9 +46,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public searchBook() {
     
-    this.variables.LoadSpiner = true;
+    // this.variables.LoadSpiner = true;
 
-    this.nav.navigate(['/home/booklist']);//clean up all debuggers and check if needs here navigate or in boklist effects, to see the loading spinner
+    this.nav.navigate(['/main/home/booklist']);//clean up all debuggers and check if needs here navigate or in boklist effects, to see the loading spinner
 
     this.store.dispatch(
       new BookListActions.SearchBook(this.book)
@@ -131,7 +131,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   public logIn() {
-    
+    console.log(this.variables.LoadSpiner)
     const loginCmpFactory = this.compFactoryResolver.resolveComponentFactory(LoginComponent);
 
     const hostviewContainerRef = this.loginHost.viewContainerRef;
@@ -146,7 +146,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public logOut() {
     this.variables.logedIn = false;
-    this.nav.navigate(['/home/booklist']);
+    this.nav.navigate(['/main/home/booklist']);
   }
 
 

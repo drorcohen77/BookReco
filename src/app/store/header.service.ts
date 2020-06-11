@@ -20,24 +20,24 @@ export class HeaderService {
     private http: HttpClient,
   ) { }
 
-  public searchBook(book) {
+  // public searchBook(book) {
 
-        this.http
-          .get<Books[]>(this.variables.url + `${book}` + this.variables.booksAPIkey)
-          .pipe(
-            map((result: any) => {
-              const booksResult = [];
+  //       this.http
+  //         .get<Books[]>(this.variables.url + `${book}` + this.variables.booksAPIkey)
+  //         .pipe(
+  //           map((result: any) => {
+  //             const booksResult = [];
               
-              for (const item in result.items) {
-                  booksResult.push({...result.items[item]});
-              }
-              this.books = booksResult;
-              localStorage.setItem('BookList',JSON.stringify(this.books));
-              this._bookList.next(this.books);
+  //             for (const item in result.items) {
+  //                 booksResult.push({...result.items[item]});
+  //             }
+  //             this.books = booksResult;
+  //             localStorage.setItem('BookList',JSON.stringify(this.books));
+  //             this._bookList.next(this.books);
 
-              return booksResult;
-            })
-          )
-          .subscribe();
-      }
+  //             return booksResult;
+  //           })
+  //         )
+  //         .subscribe();
+  //     }
 }

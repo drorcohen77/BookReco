@@ -36,6 +36,7 @@ import { CounterPanelComponent } from './counter-panel/counter-panel.component';
 import { BookTitlePipe } from '../common/pipes/book-title.pipe';
 import { LoginComponent } from '../auth/login/login.component';
 import { MainRoutingModule } from './main-routing.module';
+import { HomePageModule } from './home-page/home-page.module';
 // import { AuthInterceptor } from '../auth/auth-Interceptor.service';
 // import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { HeaderService } from '../store/header.service';//check
@@ -55,22 +56,22 @@ import { MainRoutingModule } from './main-routing.module';
 @NgModule({
   declarations: [
     MainComponent,
-    HomePageComponent,
+    // HomePageComponent,
     CounterPanelComponent,
-    BookTitlePipe,
-    BookListComponent,
-    BookDetailsComponent,
-    AddReviewComponent,
-    DisplayReviewsComponent,
-    CreateBookComponent,
+    // BookTitlePipe,
+    // BookListComponent,
+    // BookDetailsComponent,
+    // AddReviewComponent,
+    // DisplayReviewsComponent,
+    // CreateBookComponent,
     //CreateReviewModalComponent,
-    MainPlaceholderDirective,
-    LoadingSpinnerComponent
+    // MainPlaceholderDirective,
+    // LoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
-    // HomePageRoutingModule,
+    // HomePageModule,
     MainRoutingModule,
     // HttpClientModule,
     // StoreModule.forRoot({
@@ -80,16 +81,16 @@ import { MainRoutingModule } from './main-routing.module';
     // StoreModule.forRoot(fromApp.appReducer.homepage),
     // EffectsModule.forRoot([BookListEffects,BookReviewsEffects]),
     NgbModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    MatExpansionModule,
+    // BsDatepickerModule.forRoot(),
+    // MatExpansionModule,
     // RouterModule.forRoot(routes)
   ],
   providers: [
-    HomePageService,
-    BookDetailsService,
+    // HomePageService,
+    // BookDetailsService,
     Variables,
     SharedVariables,
-    BsModalService,
+    // BsModalService,
     // {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   // providers: [HeaderService,HomePageService,BookDetailsService,Variables,SharedVariables,BsModalService],

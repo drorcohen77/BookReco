@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         this.toastr.success('You Have Been Successfuly Loged-In!')
         this.onClose();
         if(!this.variables.fromCreateNewBook) {
-          this.nav.navigate(['/home/booklist']);
+          this.nav.navigate(['/main/home/booklist']);
         }
       },
       (errorMessage) => {

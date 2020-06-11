@@ -8,6 +8,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { createReviewGuard } from '../shared/createReview.guard';
 import { MainComponent } from './main.component';
 import { DisplayReviewsComponent } from './home-page/book-details/display-reviews/display-reviews.component';
+import { CounterPanelComponent } from './counter-panel/counter-panel.component';
 
 
 const routes: Routes = [
@@ -15,43 +16,47 @@ const routes: Routes = [
         path: '',
         component: MainComponent,
         children: [
-            {
-                path: '',
-                component: HomePageComponent,
-                children: [
-                    {
-                        path: 'booklist',
-                        component: BookListComponent},
-                    {
-                        path: 'details',// create lazy loading
-                        component: BookDetailsComponent,
-                        children: [
-                            {
-                                path: 'add-review', 
-                                component: AddReviewComponent, 
-                                // canActivate: [createReviewGuard]
-                            },
-                            {
-                                path: 'display-review', 
-                                component: DisplayReviewsComponent, 
-                                // canActivate: [createReviewGuard]
-                            }
-                        ]
-                    },
+            // {
+            //     path: '',
+            //     component: HomePageComponent,
+            //     children: [
                     // {
-                    //     path: 'details',
-                    //     loadChildren: './main/main.module#MainModule'
+                    //     path: 'booklist',
+                    //     component: BookListComponent
                     // },
-
+                    // {
+                    //     path: 'details',// create lazy loading
+                    //     component: BookDetailsComponent,
+                    //     children: [
+                    //         {
+                    //             path: 'add-review', 
+                    //             component: AddReviewComponent, 
+                    //             // canActivate: [createReviewGuard]
+                    //         },
+                    //         {
+                    //             path: 'display-review', 
+                    //             component: DisplayReviewsComponent, 
+                    //             // canActivate: [createReviewGuard]
+                    //         }
+                    //     ]
+                    // },
                     {
-                        path: 'new-book', 
-                        component: CreateBookComponent, 
-                        // canActivate: [createReviewGuard]
+                        path: 'home',
+                        loadChildren: './home-page/home-page.module#HomePageModule'
+                    },
+                    {
+                        path: 'main', 
+                        component: CounterPanelComponent, 
                     }
+                    // {
+                    //     path: 'new-book', 
+                    //     component: CreateBookComponent, 
+                    //     // canActivate: [createReviewGuard]
+                    // }
                 ]
             }
-        ]
-    },
+        // ]
+    // },
     // {
     //     path: 'register',
     //     component: RegisterComponent

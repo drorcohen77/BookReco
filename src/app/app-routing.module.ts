@@ -8,11 +8,11 @@ import { RegisterComponent } from './auth/register/register.component';
 const routes: Routes = [
   { path: '',
     // redirectTo: 'home/booklist',
-    redirectTo: '/home',
+    redirectTo: 'main',
     pathMatch:'full'
   },
   {
-    path: 'home',
+    path: 'main',
     loadChildren: './main/main.module#MainModule'
   },
   {
