@@ -21,26 +21,27 @@ const initialBooksState = {
 export function BookListReducer(state = initialBooksState, action: BookListActions.BookListActions) {
     switch (action.type) {
         case BookListActions.SEARCH_BOOK://sending http GET request to FIREBASE server 
+            debugger
             return {
-                ...state,
-                booksError: null,
-                loadSpiner: true,
-                books: action.payload
-            };
+                    ...state,
+                    booksError: null,
+                    loadSpiner: true,
+                    books: action.payload
+                };
         case BookListActions.RESULT_SEARCH_BOOK:// getting results from FIREBASE server
         //debugger    
-        return {
-                ...state,
-                booksError: null,
-                loadSpiner: false,
-                books: [...action.payload]
-            };
+            return {
+                    ...state,
+                    booksError: null,
+                    loadSpiner: false,
+                    books: [...action.payload]
+                };
         case BookListActions.ERROR_SEARCH_BOOK://getting error from Search Books request to FIREBASE server             
-        return {
-                ...state,
-                booksError: action.payload,
-                loadSpiner: false
-            };
+            return {
+                    ...state,
+                    booksError: action.payload,
+                    loadSpiner: false
+                };
         case BookListActions.ADDED_BOOK:
             debugger
             return {

@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
               private toastr: ToastrService,
             ) { }
 
-  ngOnInit() {
+  ngOnInit() {debugger
   }
 
 

@@ -48,11 +48,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     
     this.variables.LoadSpiner = true;
 
+    this.nav.navigate(['/home/booklist']);//clean up all debuggers and check if needs here navigate or in boklist effects, to see the loading spinner
+
     this.store.dispatch(
       new BookListActions.SearchBook(this.book)
     );
 
-    this.nav.navigate(['/home/booklist']);
 //check
     //this.header.searchBook(this.book);
 

@@ -37,7 +37,7 @@ export class AddReviewComponent implements OnInit,OnDestroy {
   
 
   constructor(private sharedVaribles: SharedVariables,
-              private bookDetailsService: BookDetailsService,
+              // private bookDetailsService: BookDetailsService,
               private route: ActivatedRoute,
               private nav: Router,
               private variables: Variables,
@@ -103,7 +103,7 @@ debugger
       // this.bookDetailsService.addReview(this.sharedVaribles.bookReviews.recommendation);
       this.toastr.success('Your Review Has Been Successfuly Added!');
       this.sharedVaribles.addRevieButton = false;
-      this.nav.navigate(['/home/booklist']);
+      this.nav.navigate(['/booklist']);
     } else {
         // this.nav.navigate(['/login']);
         if (!this.variables.fromCreateNewBook){

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 import { Variables } from 'src/app/shared/variables';
 import { AuthService } from '../auth.service';
+import { Store } from '@ngrx/store';
+import * as AuthAction from '../store/auth.action';
 
 
 
@@ -27,7 +29,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService, 
     public variables: Variables, 
     private toastr: ToastrService,
-    private nav:Router
+    private nav:Router,
+    private store: Store<{ auth }>
     ) { }
 
   ngOnInit() {
@@ -36,6 +39,9 @@ export class LoginComponent implements OnInit {
 
   public logIn() {
 
+    // this.store.dispatch(
+    //   new AuthAction.Login_Start({ email: this.email, password: this.password })
+    // );
     this.authService.logIn(this.email,this.password).subscribe(
       () => {
         this.variables.logedIn = true;

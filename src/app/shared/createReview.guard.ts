@@ -15,7 +15,7 @@ export class createReviewGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<boolean> | boolean   {
 
         // if(!this.variables.logedIn) {
-            this.route.navigate(['/home/booklist']);
+            this.route.navigate(['/booklist']);
             // return false;
         // }
         return true;

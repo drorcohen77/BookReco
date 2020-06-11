@@ -15,32 +15,32 @@ import { Variables } from 'src/app/shared/variables';
 export class BookListEffects {
     @Effect()
     bookList = this.actions$.pipe(
-                    ofType(BookListActions.SEARCH_BOOK),
-                    switchMap((itemSearch: BookListActions.SearchBook) => {
-                        debugger
-                        return this.http
-                            .get(this.variables.url + `${itemSearch.payload}` + this.variables.booksAPIkey)
-                            .pipe(
-                                map((resultSearch: any) => {
-                                    const booksResult = [];
+        ofType(BookListActions.SEARCH_BOOK),
+        switchMap((itemSearch: BookListActions.SearchBook) => {
+            debugger
+            return this.http
+                .get(this.variables.url + `${itemSearch.payload}` + this.variables.booksAPIkey)
+                .pipe(
+                    map((resultSearch: any) => {
+                        const booksResult = [];
                                     
-                                    for (const item in resultSearch.items) {
-                                        booksResult.push({...resultSearch.items[item]});
-                                    }
+                        for (const item in resultSearch.items) {
+                            booksResult.push({...resultSearch.items[item]});
+                        }
                                     
-                                    localStorage.setItem('BookList',JSON.stringify(booksResult));
-                                    return new BookListActions.ResultSearchBook(booksResult);
-                                }),
-                                catchError((error: HttpErrorResponse) => {
-                                    if (error.status === 400) {
-                                        this.variables.errorCode = 400;
-                                        let HttpErrorResponse = "Please enter query or specify your search!";
-                                        return of(new BookListActions.ErrorSearchBook(HttpErrorResponse));
-                                    }
-                                })
-                            );
+                        localStorage.setItem('BookList',JSON.stringify(booksResult));
+                        return new BookListActions.ResultSearchBook(booksResult);
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        if (error.status === 400) {
+                            this.variables.errorCode = 400;
+                            let HttpErrorResponse = "Please enter query or specify your search!";
+                            return of(new BookListActions.ErrorSearchBook(HttpErrorResponse));
+                        }
                     })
                 );
+        })
+    );
     
 
     // @Effect({dispatch: false})
@@ -68,21 +68,21 @@ export class BookListEffects {
 
     @Effect()
     newBook = this.actions$.pipe(
-                        ofType(BookListActions.ADD_BOOK),
-                        switchMap((createNewBook: BookListActions.AddBook) => {
-                            debugger
-                            return this.http.post(this.variables.FirebaseDB + `Books.json`,createNewBook.payload)
-                                .pipe(
-                                    map((bookID: any) => {
-                                        console.log(bookID.name)
-                                        return new BookListActions.AddedBook(bookID.name);
-                                    }),
-                                    catchError((error: HttpErrorResponse) => {
-                                        return of();
-                                    })
-                                );
-                        })
-                    );
+        ofType(BookListActions.ADD_BOOK),
+        switchMap((createNewBook: BookListActions.AddBook) => {
+            debugger
+            return this.http.post(this.variables.FirebaseDB + `Books.json`,createNewBook.payload)
+                .pipe(
+                    map((bookID: any) => {
+                        console.log(bookID.name)
+                        return new BookListActions.AddedBook(bookID.name);
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        return of();
+                    })
+                );
+        })
+    );
 
 
     // @Effect()

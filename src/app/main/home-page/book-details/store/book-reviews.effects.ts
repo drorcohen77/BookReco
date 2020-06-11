@@ -2,13 +2,13 @@ import { Effect, ofType, Actions } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { switchMap, catchError, map, switchMapTo, tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { of } from 'rxjs';
 
 import * as BookReviewsActions from '../store/book-reviews.actions'
 import { Recommendation } from 'src/app/shared/recommendation.model';
 import { Variables } from 'src/app/shared/variables';
 import { SharedVariables } from '../shared-BookDetails/Shared_variables';
-import { AngularFireDatabase } from '@angular/fire/database';
 
 
 @Injectable()

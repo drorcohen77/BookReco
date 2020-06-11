@@ -160,6 +160,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
    public onGetReviews() {
     this.sharedVaribles.reviewButton = true;
+    this.sharedVaribles.addRevieButton = false;
 debugger
     this.store.dispatch(
       new BookReveiwsActions.getBookReviews(this.bookDetails._bookID)
@@ -171,6 +172,8 @@ debugger
   }
 
   ngOnDestroy(): void {
+    this.sharedVaribles.reviewButton = false;
+    this.sharedVaribles.addRevieButton = false;
     if (this.subscripion) {
       this.subscripion.unsubscribe();
     }
