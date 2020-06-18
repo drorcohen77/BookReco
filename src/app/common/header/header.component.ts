@@ -1,18 +1,15 @@
 import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
-import { Books } from 'src/app/shared/books.model';
 import { Variables } from 'src/app/shared/variables';
 import * as BookListActions from '../../main/home-page/store/book-list.actions'
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { AppPlaceholderDirective } from 'src/app/shared/app_placeholder.directive';
-//import { HeaderService } from '../../store/header.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HeaderService } from 'src/app/store/header.service';
-
-//import { HeaderService } from 'src/app/common/header/header.service';//check
+import { AuthService } from '../../auth/auth.service';
+import { HomePageService } from 'src/app/main/home-page/home-page.service';
 
 
 
@@ -25,15 +22,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild(AppPlaceholderDirective, {static: false}) loginHost: AppPlaceholderDirective;
 
-  // private subscription: Subscription;
+
   public bookList: any = [];
   public book: string = '';
   public HttpErrorResponse: string;
   private close: Subscription;
 
 
-  constructor(
-    // private header: HeaderService,//check
+  constructor(public authService: AuthService,
+              private homePageService: HomePageService,
               private variables: Variables, 
               private nav: Router, 
               private store: Store<{ bookList }>,
@@ -45,8 +42,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   public searchBook() {
-    
-    // this.variables.LoadSpiner = true;
 
     this.nav.navigate(['/main/home/booklist']);//clean up all debuggers and check if needs here navigate or in boklist effects, to see the loading spinner
 
@@ -54,84 +49,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       new BookListActions.SearchBook(this.book)
     );
 
-//check
-    //this.header.searchBook(this.book);
-
-    // this.subscription = this.header.searchBook(this.book).subscribe(
-    //   (result: Books[]) => {
-    //     debugger
-    //     this.bookList = result;
-    //     console.log(this.bookList);
-    //   },
-    //   (err: HttpErrorResponse) => {
-    //     if (err.status === 400) {
-    //       this.variables.errorCode = 400;
-    //       this.HttpErrorResponse = "Please enter query or specify your search!";
-    //     }
-    //     this.variables.LoadSpiner = false;
-    //   },
-    //   () => {
-    //     this.variables.LoadSpiner = false;
-    //   }
-    // );
-    // this.nav.navigate(['/home/booklist']);
-
-
-    // this.nav.navigate(['/home/booklist']);
-    // this.subscription = this.store
-    //       .select('bookList')
-    //       .subscribe(
-    //         (books: any) => {
-    //           if (books.books === '') {
-    //             this.HttpErrorResponse = books.booksError;
-    //           }else {
-    //             console.log( books)
-    //             this.variables.errorCode = 0;
-    //             this.bookList = books.books;
-    //             console.log( this.bookList)
-    //             this.variables.LoadSpiner = books.loadSpiner;
-    //             console.log( this.variables.LoadSpiner)
-    //           }
-    //         }
-    //       );
-
-    //   (err: HttpErrorResponse) => {
-    //     if (err.status === 400) {
-    //       this.variables.errorCode = 400;
-    //       this.HttpErrorResponse = "Please enter query or specify your search!";
-    //     }
-    //     this.variables.LoadSpiner = false;
-    //   },
-    //   () => {
-    //     this.variables.LoadSpiner = false;
-    //   }
-    // );
-
-
-    // this.subscription = this.HomePage.searchBook(this.book).subscribe(
-    //   (result: Books[]) => {
-    //     debugger
-    //     this.bookList = result;
-    //     console.log(this.bookList);
-    //   },
-      // (err: HttpErrorResponse) => {
-      //   if (err.status === 400) {
-      //     this.variables.errorCode = 400;
-      //     this.HttpErrorResponse = "Please enter query or specify your search!";
-      //   }
-      //   this.variables.LoadSpiner = false;
-      // },
-    //   () => {
-    //     this.variables.LoadSpiner = false;
-    //   }
-    // );
-    //this.nav.navigate(['/home/booklist']);
     this.book = '';
   }
 
 
   public logIn() {
-    console.log(this.variables.LoadSpiner)
     const loginCmpFactory = this.compFactoryResolver.resolveComponentFactory(LoginComponent);
 
     const hostviewContainerRef = this.loginHost.viewContainerRef;
@@ -145,13 +67,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   public logOut() {
-    this.variables.logedIn = false;
+    this.authService.logedIn = false;
     this.nav.navigate(['/main/home/booklist']);
   }
 
 
   public signUp() {
-    this.variables.fromCreateNewBook = false;
+    this.homePageService.fromCreateNewBook = false;
     this.nav.navigate(['/register']);
   }
 
@@ -164,12 +86,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       localStorage.removeItem('new_Book');
     }
   }
-//
+
   public removLocalStorge(): void {
     
     if(localStorage.getItem('BookList')) {
       localStorage.removeItem('BookList');
     }
   }
-//
+
 }

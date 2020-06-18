@@ -2,19 +2,20 @@ import { Component, OnInit, OnDestroy, Input, ComponentFactoryResolver, ViewChil
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { Books } from 'src/app/shared/books.model';
 import { Variables } from './../../../../shared/variables';
 import { Recommendation } from 'src/app/shared/recommendation.model';
-import { BookDetailsService } from '../book-details.service';
 import { HomePageService } from '../../home-page.service';
 import { SharedVariables } from '../shared-BookDetails/Shared_variables';
 import * as moment from 'moment'
 import * as BookReveiwsActions from '../store/book-reviews.actions';
-import { MainPlaceholderDirective } from '../../../../main/share/main_placeholder.directive';
 import { LoginComponent } from 'src/app/auth/login/login.component';
-import { Subscription } from 'rxjs';
+import { CanComponentDeactivate } from 'src/app/main/share/can-deactivate-guard.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { BookDetailsPlaceholderDirective } from '../shared-BookDetails/book-details-placeholder.directive';
 
 
 
@@ -23,9 +24,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './add-review.component.html',
   styleUrls: ['./add-review.component.scss']
 })
-export class AddReviewComponent implements OnInit,OnDestroy {
+export class AddReviewComponent implements OnInit,OnDestroy, CanComponentDeactivate {
 
-  @ViewChild(MainPlaceholderDirective, {static: false}) loginHost: MainPlaceholderDirective;
+  @ViewChild(BookDetailsPlaceholderDirective, {static: false}) loginHost: BookDetailsPlaceholderDirective;
   @Input() Book: Books;
 
   private readonly resBookID = this.HomePageService.bookID$;
@@ -33,14 +34,14 @@ export class AddReviewComponent implements OnInit,OnDestroy {
   public newReview:Recommendation;
   private nowDate: string;
   private close: Subscription;
-  // private readonly _ID: string = '+RATE';
+  private submitReview: boolean = false;
+  // private readonly _ID: string = '+RATE';  create bookID to book created from the users
   
 
   constructor(private sharedVaribles: SharedVariables,
-              // private bookDetailsService: BookDetailsService,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private nav: Router,
-              private variables: Variables,
               private toastr: ToastrService,
               private compFactoryResolver: ComponentFactoryResolver,
               private HomePageService: HomePageService, 
@@ -48,7 +49,7 @@ export class AddReviewComponent implements OnInit,OnDestroy {
               private storeBookList: Store<{bookList}>
               ) {
     
-    if(this.variables.fromCreateNewBook) {
+    if(this.HomePageService.fromCreateNewBook) {
       this.bookTitle = this.route.snapshot.queryParams['book_title'];
     }else{
       this.sharedVaribles.bookID = this.route.snapshot.queryParams['book-id'];
@@ -56,9 +57,9 @@ export class AddReviewComponent implements OnInit,OnDestroy {
    }
 
   ngOnInit() {
-    debugger
-    if(this.variables.fromCreateNewBook) {
-      this.variables.logedIn = true;
+    
+    if(this.HomePageService.fromCreateNewBook) {
+      this.authService.logedIn = true;
 
       this.storeBookList.select('bookList')
               .pipe(
@@ -83,30 +84,21 @@ export class AddReviewComponent implements OnInit,OnDestroy {
     this.newReview = new Recommendation();
     this.nowDate = moment().format('DD/MM/YYYY');
     this.newReview = {...this.newReview, createDate: this.nowDate};
-    // console.log(this.newReview.createDate,this.sharedVaribles.bookID)
-    // console.log(this.variables.logedIn)
   }
 
   
   public addReveiw() {
-debugger
-    if(this.variables.logedIn) {
-      
-      // this.sharedVaribles.bookReviews = new Books();
-      // this.sharedVaribles.bookReviews = {...this.Book,recommendation: []};
 
-      // this.sharedVaribles.bookReviews.recommendation.push(this.newReview) ;
+    if(this.authService.logedIn) {
       
       this.storeBookReviews.dispatch(
-        new BookReveiwsActions.addReview(this.newReview)
+        new BookReveiwsActions.addReview(this.newReview,this.sharedVaribles.existBookID)
       );
-      // this.bookDetailsService.addReview(this.sharedVaribles.bookReviews.recommendation);
       this.toastr.success('Your Review Has Been Successfuly Added!');
       this.sharedVaribles.addRevieButton = false;
       this.nav.navigate(['/main/home/booklist']);
     } else {
-        // this.nav.navigate(['/login']);
-        if (!this.variables.fromCreateNewBook){
+        if (!this.HomePageService.fromCreateNewBook){
           this.showLogin();
         }
     }
@@ -114,7 +106,7 @@ debugger
 
 
   private showLogin() {
-    debugger
+    
     const loginCmpFactory = this.compFactoryResolver.resolveComponentFactory(LoginComponent);
 
     const hostviewContainerRef = this.loginHost.viewContainerRef;
@@ -129,9 +121,18 @@ debugger
   }
   
 
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this.submitReview) {
+      return confirm('Do you want to discard the new review you entered and leave the page');
+    }else{
+      return true;
+    }
+  }
+  
+
   ngOnDestroy(): void {
     this.sharedVaribles.addRevieButton = false;
-    this.variables.fromCreateNewBook = false;
+    this.HomePageService.fromCreateNewBook = false;
   }
 
 }

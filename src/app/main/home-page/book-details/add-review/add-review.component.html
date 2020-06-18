@@ -2,8 +2,8 @@
 
 <div>
     <h5 class="title">Add your review to: </h5>
-    <span *ngIf="!variables.fromCreateNewBook">"{{Book.title}}"</span>
-    <span *ngIf="variables.fromCreateNewBook">"{{bookTitle}}"</span>
+    <span *ngIf="!HomePageService.fromCreateNewBook">"{{Book.title}}"</span>
+    <span *ngIf="HomePageService.fromCreateNewBook">"{{bookTitle}}"</span>
 </div>
 
 <form #addReview="ngForm">

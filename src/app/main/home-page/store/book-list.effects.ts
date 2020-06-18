@@ -17,7 +17,7 @@ export class BookListEffects {
     bookList = this.actions$.pipe(
         ofType(BookListActions.SEARCH_BOOK),
         switchMap((itemSearch: BookListActions.SearchBook) => {
-            debugger
+            
             return this.http
                 .get(this.variables.url + `${itemSearch.payload}` + this.variables.booksAPIkey)
                 .pipe(
@@ -52,29 +52,14 @@ export class BookListEffects {
     // );
 
 
-    // @Effect()
-    // newBook = this.actions$.pipe(
-    //                     ofType(BookListActions.ADD_BOOK),
-    //                     switchMap((createNewBook: BookListActions.AddBook) => {
-    //                           debugger                       
-    //                         return this.db.list(`Books/`).push(createNewBook.payload).then((addedBook) => {
-    //                             return  new BookListActions.AddedBook(addedBook.key);
-    //                         });
-    //                     }),
-    //                     catchError((error: HttpErrorResponse) => {
-    //                         return of();
-    //                     })
-    //             );
-
     @Effect()
     newBook = this.actions$.pipe(
         ofType(BookListActions.ADD_BOOK),
         switchMap((createNewBook: BookListActions.AddBook) => {
-            debugger
+            
             return this.http.post(this.variables.FirebaseDB + `Books.json`,createNewBook.payload)
                 .pipe(
                     map((bookID: any) => {
-                        console.log(bookID.name)
                         return new BookListActions.AddedBook(bookID.name);
                     }),
                     catchError((error: HttpErrorResponse) => {
@@ -85,31 +70,9 @@ export class BookListEffects {
     );
 
 
-    // @Effect()
-    // newReview = this.actions$.pipe(
-    //                     ofType(BookListActions.ADD_RECOMMENDATION),
-    //                     switchMap((review: BookListActions.AddRecommedation) => {
-                         
-    //                         if (review.payload.newReview.title) {
-    //                             delete review.payload.newReview.title;
-    //                         }
-                              
-    //                         return this.db.list(`Books/${review.payload.bookID}/recommendation`)
-    //                                   .push(review.payload.newReview).key;
-    //                     }),
-    //                     catchError((error: HttpErrorResponse) => {
-    //                         return of();
-    //                     })
-    //             );
-
-
-    
-    
 
     constructor(private actions$: Actions,
                 private http: HttpClient, 
-                private variables: Variables,
-                private nav: Router,
-                private db: AngularFireDatabase, 
+                private variables: Variables
                 ) {}
 }

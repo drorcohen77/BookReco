@@ -18,7 +18,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainModule } from './main/main.module';
 import { BookListReducer } from './main/home-page/store/book-list.reducer';
 import { BookReviewsReducer } from './main/home-page/book-details/store/book-reviews.reducer';
 import { HeaderComponent } from './common/header/header.component';
@@ -34,11 +33,6 @@ import { BookReviewsEffects } from './main/home-page/book-details/store/book-rev
 import { BookListEffects } from './main/home-page/store/book-list.effects';
 import { Variables } from './shared/variables';
 import { SharedVariables } from './main/home-page/book-details/shared-BookDetails/Shared_variables';
-// import { BookDetailsModule } from './main/home-page/book-details/book-details.module';
-// import { from } from 'rxjs';
-
-//import { HeaderService } from './common/header/header.service';//check
-// import * as fromApp from './store/app.reducer';
 
 
 
@@ -56,13 +50,10 @@ import { SharedVariables } from './main/home-page/book-details/shared-BookDetail
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    // MainModule,
-    // BookDetailsModule,
     StoreModule.forRoot({auth: AuthReducer, bookList: BookListReducer, bookReviews: BookReviewsReducer}),
     EffectsModule.forRoot([AuthEffects,BookListEffects,BookReviewsEffects]),
     // EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
-    // StoreDevtoolsModule,
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -73,13 +64,14 @@ import { SharedVariables } from './main/home-page/book-details/shared-BookDetail
     AngularFirestoreModule,
     HttpClientModule,
   ],
-  //providers: [],
   providers: [
     Variables,
-    SharedVariables,{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    SharedVariables,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
   entryComponents: [
     LoginComponent
   ]
 })
+
 export class AppModule { }

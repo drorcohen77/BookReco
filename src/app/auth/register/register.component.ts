@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ComponentFactoryResolver } from '@angular
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { Variables } from 'src/app/shared/variables';
@@ -25,12 +24,11 @@ export class RegisterComponent implements OnInit {
   constructor(
               private authService: AuthService, 
               public variables: Variables,
-              private nav: Router,
               private compFactoryResolver: ComponentFactoryResolver,
               private toastr: ToastrService,
             ) { }
 
-  ngOnInit() {debugger
+  ngOnInit() {
   }
 
 
@@ -44,28 +42,26 @@ export class RegisterComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
     const userName = form.value.UserName;
-debugger
+
     this.authService.singup(email, password, userName).subscribe(
       (resData) => {
-        console.log(resData)
         this.variables.LoadSpiner = false;
         this.toastr.success('You Have Been Successfuly Registered!');
-        // this.nav.navigate(['/home/booklist']);
+        this.authService.fromRegister = true;
         this.logIn();
       },
       (error) => {
-        console.log(error);
         this.error = error;
         this.variables.LoadSpiner = false;
       }
     );
-    this.variables.register = true;
+    // this.variables.register = true;
     this.error = null;
     form.reset();
   }
 
   private logIn() {
-    debugger
+    
     const loginCmpFactory = this.compFactoryResolver.resolveComponentFactory(LoginComponent);
 
     const hostviewContainerRef = this.loginHost.viewContainerRef;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError, Subject, BehaviorSubject } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from './user.model';
 
@@ -21,11 +21,12 @@ interface AuthResposeData {
 })
 export class AuthService {
 
-  // public newUser = new Subject<User>() 
-  public newUser = new BehaviorSubject<User>(null)
   
+  public newUser = new BehaviorSubject<User>(null)
+  public logedIn: boolean = false;
+  public fromRegister: boolean = false;
 
-  constructor(private http: HttpClient) {console.log(this.newUser) }
+  constructor(private http: HttpClient) {}
 
   public singup(email: string, password: string, userName: string) {
     

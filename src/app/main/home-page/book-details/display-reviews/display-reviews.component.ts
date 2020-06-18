@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnDestroy, ɵEMPTY_ARRAY } from '@angular/core';
-import { Store, ActionsSubject } from '@ngrx/store';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { Recommendation } from 'src/app/shared/recommendation.model';
@@ -15,7 +15,6 @@ import * as BookReveiwsActions from '../store/book-reviews.actions';
 })
 export class DisplayReviewsComponent implements OnInit, OnDestroy {
 
-  // @Input() BookReviews: Recommendation[];
   @Input() bookID: string;
 
   public BookReviews: Recommendation[] = [];
@@ -28,34 +27,16 @@ export class DisplayReviewsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-debugger
+
     this.subscription = this.store
           .select('bookReviews')
           .subscribe(
             (reviews: any)=> {
               this.variables.LoadSpiner = reviews.loadSpiner;
-              console.log(this.variables.LoadSpiner)
-              // this.sharedVaribles.reviewButton = reviews.openReviews;
               this.sharedVaribles.reviewButton = reviews.closeReviews;
               this.BookReviews = reviews.bookReviews;
             }
-          );
-// debugger
-//     this.subscription = this.actions.pipe(
-//               ofType('RES_BOOK_REVIEWS')
-//               )
-//               .subscribe(
-//                 (reviews: any)=> {
-//                             // if(reviews !== null) {
-//                             // this.variables.LoadSpiner = reviews.loadSpiner;
-//                             // this.sharedVaribles.reviewButton = reviews.closeReviews;
-//                             // this.BookReviews = reviews.bookReviews;
-//                             debugger
-//                             console.log(reviews)
-//                             // }
-//                           }
-//               )        
-        
+          );      
   }
   
 

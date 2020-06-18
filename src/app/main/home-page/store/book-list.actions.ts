@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { Books } from 'src/app/shared/books.model';
-import { Recommendation } from 'src/app/shared/recommendation.model';
 
 
 export const SEARCH_BOOK = '[Book List] SearchBook';
@@ -39,20 +38,14 @@ export class ErrorSearchBook implements Action {
 export class AddBook implements Action {
     readonly type = ADD_BOOK;
 
-    constructor(public payload: Books) {debugger}
+    constructor(public payload: Books) {}
 }
 
-
-// export class AddRecommedation implements Action {
-//     readonly type = ADD_RECOMMENDATION;
-
-//     constructor(public payload: {bookID: string; newReview: Recommendation}) {debugger}
-// }
 
 export class AddedBook implements Action {
     readonly type = ADDED_BOOK;
 
-    constructor(public payload: any) {debugger}
+    constructor(public payload: any) {}
 }
 
 

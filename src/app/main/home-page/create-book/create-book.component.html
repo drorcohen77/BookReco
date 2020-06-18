@@ -24,7 +24,6 @@
 
             <div class="form-group">
                 <label for="publishedDate">Published Date:</label>
-                <!-- <input [(ngModel)]="newBook.publishedDate" type="date" class="form-control" name="publishedDate" id="publishedDate" placeholder="Enter published Date"> -->
                 <input 
                     [(ngModel)]="newBook.publishedDate" 
                     class="form-control" 
@@ -86,7 +85,7 @@
         <h5>Do you want to add a review ?</h5>
     </div>
     <div class="modal-footer">
-        <a type="button" class="btn btn-success" [routerLink]="['/details/add-review']" [queryParams]="{book_title: newBook.title}" (click)="c('Close click')">Yes</a>
+        <a type="button" class="btn btn-success" [routerLink]="['/main/home/details/add-review']" [queryParams]="{book_title: newBook.title}" (click)="c('Close click')">Yes</a>
         <a type="button" class="btn btn-outline-dark" routerLink="/main/home/booklist" (click)="c('Close click')">No</a>
     </div>
 </ng-template>

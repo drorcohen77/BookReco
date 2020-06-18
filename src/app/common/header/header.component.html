@@ -3,12 +3,8 @@
     <a class="navbar-brand" routerLink="main" (click)="removLocalStorge()">
         <img src="" class="card-img-top" alt="" style="width: 45px; height: 35px;margin-right: 3px;"><i>BookReco</i>
     </a>
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button> -->
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
         <ul class="navbar-nav mt-2 mt-lg-0">
             
             <li class="nav-item">
@@ -17,19 +13,12 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="main/home/booklist" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Book-List</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" routerLink="home/new-review" routerLinkActive="active">Create Review</a>
-            </li> -->
             <div class="nav-item">
                 <a  class="nav-link" 
                     routerLink="/main/home/new-book" 
                     routerLinkActive="active">
                     Create New
                 </a>
-                <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" routerLink="home/new-book">Create Book</a>
-                    <a class="dropdown-item" routerLink="home/new-review">Create Review</a>
-                </div> -->
             </div>
             <li class="nav-item" class="col-md-4 col-xs-5 col-lg-4 search">
                 <div id="custom-search-input">
@@ -47,15 +36,15 @@
                 </div>
             </li>
             <li class="nav-item">
-                <button *ngIf="!variables.logedIn" class="btn btn-outline-primary" routerLinkActive="active" (click)="logIn()">Log-In</button>
+                <button *ngIf="!authService.logedIn" class="btn btn-outline-primary" routerLinkActive="active" (click)="logIn()">Log-In</button>
             </li>
-            <li *ngIf="variables.logedIn" class="nav-item">
+            <li *ngIf="authService.logedIn" class="nav-item">
                 <button class="btn btn-link" routerLinkActive="active" (click)="logOut()">Log-Out</button>
             </li>
 
             <li class="nav-item">
                 <a>
-                    <button *ngIf="!variables.logedIn" class="btn btn-outline-dark" (click)="signUp()">Sign-Up</button>
+                    <button *ngIf="!authService.logedIn" class="btn btn-outline-dark" (click)="signUp()">Sign-Up</button>
                 </a>
             </li>
         </ul>

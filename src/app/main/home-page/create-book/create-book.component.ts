@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable'
 
 import { Books } from 'src/app/shared/books.model';
 import { HomePageService } from '../home-page.service';
@@ -12,6 +13,8 @@ import { LoginComponent } from '../../../auth/login/login.component';
 import { MainPlaceholderDirective } from '../../share/main_placeholder.directive';
 import * as moment from 'moment';
 import * as BookListActions from '../store/book-list.actions';
+import { CanComponentDeactivate } from '../../share/can-deactivate-guard.service';
+import { AuthService } from 'src/app/auth/auth.service';
 // import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -19,7 +22,7 @@ import * as BookListActions from '../store/book-list.actions';
   templateUrl: './create-book.component.html',
   styleUrls: ['./create-book.component.scss']
 })
-export class CreateBookComponent implements OnInit, OnDestroy {
+export class CreateBookComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
   @ViewChild(MainPlaceholderDirective, {static: false}) loginHost: MainPlaceholderDirective;
 
@@ -27,15 +30,15 @@ export class CreateBookComponent implements OnInit, OnDestroy {
   public bookExist: any;
   public reviewInStorage: any;
   private close: Subscription;
+  private submitBook: boolean = false;
 
   // modalRef: BsModalRef;
   // message: string;
   // private reviewModal: any;
 
   constructor(private HomePageService: HomePageService,
-              private nav: Router, 
+              private authService: AuthService,
               private modalService: NgbModal, 
-              private toastr: ToastrService,
               private variables: Variables,
               private compFactoryResolver: ComponentFactoryResolver,
               private store: Store<{ bookList }>
@@ -48,7 +51,6 @@ export class CreateBookComponent implements OnInit, OnDestroy {
       localStorage.removeItem('new_book');
     }
     this.reviewInStorage = JSON.parse(localStorage.getItem('new_review'));
-    // this.variables.logedIn = true;
   }
 
   ngOnInit() {
@@ -56,53 +58,34 @@ export class CreateBookComponent implements OnInit, OnDestroy {
 
 
   public async onCreateBook(moveToReview)  {
-    this.variables.fromCreateNewBook = true;
-    debugger
+    this.HomePageService.fromCreateNewBook = true;
+    this.submitBook = true;
+
     if(!localStorage.getItem('new_book')) {
       this.storeNewBook();
     }
     
-    if(!this.variables.logedIn) {
+    if(!this.authService.logedIn) {
+      this.submitBook = false;
       this.showLogin();
     }else{
-    // if(this.variables.logedIn) {
-
-    // let newPublishDate = moment(this.newBook.publishedDate).format('DD/MM/YYYY');
-    // this.newBook = {...this.newBook, publishedDate: newPublishDate};
-
-    // if (this.reviewInStorage) {
-    //   this.newBook = {...this.newBook, title: this.reviewInStorage.title};
-    // }
-
-    // let newTitle = this.newBook.title.replace(/[^\w\s]/gi, "").trim().replace(/\b\w/g, (s) => s.toUpperCase());
-    // this.newBook = {...this.newBook, title: newTitle};
-        
+      this.submitBook = true;
+   
       let returnBook;
       returnBook = await this.HomePageService.existBook(this.newBook.title, this.newBook.author);
+      // needs to use service because nedds sync request and effects is an async.
   
       if (returnBook === "") {
-        debugger
-          // return this.db.list(`Books/`).push(this.newBook).key;
         this.store.dispatch(
           new BookListActions.AddBook(this.newBook)
         );
-        // this.toastr.success('Your Book Has Been Successfuly Added!');
-        // this.variables.fromCreateNewBook = true;
-        
-          // this.modalRef = this.modalServic.show(moveToReview, {class: 'modal-sm'});
-        // this.reviewModal = moveToReview;
         this.modalService.open(moveToReview);
-          // this.nav.navigate(['/home/booklist']);
       } else {
-          // localStorage.setItem('new_book', JSON.stringify(this.newBook));
-          // this.variables.fromCreateNewBook = true;
           this.modalService.open(moveToReview);
       }
-      // }
       localStorage.removeItem('new_review');
-      this.variables.logedIn = false;
+      this.authService.logedIn = false;
     }
-    // localStorage.removeItem('new_book');
   }
 
 
@@ -122,7 +105,7 @@ export class CreateBookComponent implements OnInit, OnDestroy {
 
   
   private showLogin() {
-    debugger
+    
     const loginCmpFactory = this.compFactoryResolver.resolveComponentFactory(LoginComponent);
 
     const hostviewContainerRef = this.loginHost.viewContainerRef;
@@ -137,36 +120,24 @@ export class CreateBookComponent implements OnInit, OnDestroy {
   }
 
 
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this.submitBook && Object.values(this.newBook).length !== 0) {
+
+      return confirm('Do you want to discard the new book you entered and leave the page');
+    }else{
+      return true;
+    }
+  }
+
+
   ngOnDestroy() {
     if(this.close) {
       this.close.unsubscribe();
     }
     if(this.variables.register) {
-      // localStorage.removeItem('new_book');
       this.variables.register = false;
     }
   }
 
-  //   let newPublishDate = moment(this.newBook.publishedDate).format('DD/MM/YYYY');
-  //   this.newBook = {...this.newBook, publishedDate: newPublishDate};
-
-  //   if (this.reviewInStorage) {
-  //     this.newBook = {...this.newBook, title: this.reviewInStorage.title};
-  //   }
-    
-  //   this.HomePageService.createBook(this.newBook).then(
-  //     (book: any) =>{
-  //       this.bookExist = book;
-  //       if (localStorage.getItem('new_review')) {
-  //         this.toastr.success('Your Book Has Been Successfuly Added!')
-  //         this.nav.navigate(['/home/booklist']);
-  //       } else {
-  //         localStorage.setItem('new_book', JSON.stringify(this.newBook));
-  //         this.modalService.open(moveToReview);
-  //       }
-  //       localStorage.removeItem('new_review');
-  //     } 
-  //   );
-  // }
 
 }
