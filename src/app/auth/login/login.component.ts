@@ -42,8 +42,12 @@ export class LoginComponent implements OnInit {
     // );
     this.authService.logIn(this.email,this.password).subscribe(
       () => {
-        this.authService.logedIn = true;
-        this.toastr.success('You Have Been Successfuly Loged-In!')
+        if (this.authService.logedIn) {
+          this.toastr.success('You Have Been Successfuly Loged-In!');
+        }
+        // else {
+        //   this.toastr.info('You Need To Log-In First!');
+        // }
         this.onClose();
 
         if(this.authService.fromRegister) {
@@ -52,12 +56,13 @@ export class LoginComponent implements OnInit {
       },
       (errorMessage) => {
         this.error = errorMessage;
+        this.toastr.error('There Have Been An Error Acured! Please Try Again Or Check Your Email/Passwored');
       }
     );
   }
 
   public onClose() {
-    this.authService.logedIn = true;
+    // this.authService.logedIn = true;
     this.close.emit();
   }
 

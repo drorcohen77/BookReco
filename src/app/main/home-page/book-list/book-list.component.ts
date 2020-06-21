@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Variables } from './../../../shared/variables';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 
@@ -21,28 +22,31 @@ export class BookListComponent implements OnInit {
 
   constructor(
     public variables: Variables, 
-    private nav: Router, 
+    private nav: Router,
+    private authService: AuthService, 
     private store: Store<{ bookList }>
   ) {
 
-    if(localStorage.getItem('pickedBook')) {
+    if (localStorage.getItem('pickedBook')) {
       localStorage.removeItem('pickedBook');
     }
    }
 
   ngOnInit() {
-      
+    
     this.variables.errorCode = 0;
 
     this.store.select('bookList').subscribe(
               (books: any) => {
-                if (books.books === ''|| books.books === undefined) {
+                if (books.booksError !== null) {
                   this.HttpErrorResponse = books.booksError;
                   this.variables.LoadSpiner = books.loadSpiner;
-                }else {
+                } else if (books.books !== null) {
                   this.variables.errorCode = 0;
                   this.bookList = books.books;
                   this.variables.LoadSpiner = books.loadSpiner;
+                } else {
+                  this.bookList = JSON.parse(localStorage.getItem('BookList'));
                 }
               }
             );

@@ -67,9 +67,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   public logOut() {
-    this.authService.logedIn = false;
-    this.nav.navigate(['/main/home/booklist']);
+    this.authService.logOut();
   }
+
+  
 
 
   public signUp() {
@@ -89,9 +90,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public removLocalStorge(): void {
     
-    if(localStorage.getItem('BookList')) {
-      localStorage.removeItem('BookList');
-    }
+    // if(localStorage.getItem('BookList')) {
+    //   localStorage.removeItem('BookList');
+    // }
   }
 
 }

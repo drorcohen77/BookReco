@@ -66,6 +66,7 @@ export class CreateBookComponent implements OnInit, OnDestroy, CanComponentDeact
     }
     
     if(!this.authService.logedIn) {
+      debugger
       this.submitBook = false;
       this.showLogin();
     }else{
@@ -73,7 +74,7 @@ export class CreateBookComponent implements OnInit, OnDestroy, CanComponentDeact
    
       let returnBook;
       returnBook = await this.HomePageService.existBook(this.newBook.title, this.newBook.author);
-      // needs to use service because nedds sync request and effects is an async.
+      // needs to use service because needs sync request and effects is an async.
   
       if (returnBook === "") {
         this.store.dispatch(
@@ -81,10 +82,11 @@ export class CreateBookComponent implements OnInit, OnDestroy, CanComponentDeact
         );
         this.modalService.open(moveToReview);
       } else {
+        debugger
           this.modalService.open(moveToReview);
       }
       localStorage.removeItem('new_review');
-      this.authService.logedIn = false;
+      // this.authService.logedIn = false;
     }
   }
 
